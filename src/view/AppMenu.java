@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.print.Printable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
