@@ -5,6 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
+import org.hamcrest.core.StringContains;
+
 import exceptions.MinMaxException;
 import exceptions.NegativePriceException;
 import model.Animals;
@@ -153,13 +155,14 @@ public class AppController {
 				toyFound = false;
 				for (Toys t : toyInventory) {
 					
-					if (name.equalsIgnoreCase(t.getName())) {
+					if (t.getName().contains(name)) {
 						appMenu.showSearchResultsP2(t, n);
 						toySearchResults.add(t);
 						n += 1;
 						t1 = t;
 						toyFound = true;
 					}
+					
 				}
 				if (!toyFound) {
 					appMenu.showToyNameNotFound();
