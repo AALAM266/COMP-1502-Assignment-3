@@ -159,6 +159,86 @@ public class Manager extends AppController implements Initializable {
                && serialNumber.chars().allMatch(Character::isDigit);
     }
     
+    private boolean isValidToyPrice(String price) {
+        try {
+            int priceValue = Integer.parseInt(price);
+            return priceValue >= 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+    
+    private boolean isValidToyAvailabilityCount(String count) {
+        try {
+            int countValue = Integer.parseInt(count);
+            return countValue >= 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+    
+    private boolean isValidToyAgeRating(String age) {
+        try {
+            int ageValue = Integer.parseInt(age);
+            return ageValue >= 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+    
+    // this should validate any string, checks if its empty and/or case insensitivity (name, brand, board game designer, animal material etc..)
+    private boolean isValidString(String str) {
+        return str != null && !str.trim().isEmpty();
+    }
+    
+    // this checks the figure class and makes sure it matches the 3 types of figures
+    private boolean isValidFigureClassification(String classification) {
+        if (classification == null || classification.trim().isEmpty()) {
+            return false;
+        }
+        String lowerCaseClassification = classification.trim().toLowerCase();
+        return lowerCaseClassification.equals("action") || lowerCaseClassification.equals("doll") || lowerCaseClassification.equals("historic");
+    }
+    
+    // same thing but for puzzle type
+    private boolean isValidPuzzleType(String type) {
+        if (type == null || type.trim().isEmpty()) {
+            return false;
+        }
+        String lowerCaseType = type.trim().toLowerCase();
+        return lowerCaseType.equals("mechanical") || lowerCaseType.equals("cryptic") || lowerCaseType.equals("logic") || lowerCaseType.equals("trivia") || lowerCaseType.equals("riddle");
+    }
+    
+    // ""
+    private boolean isValidAnimalSize(String animalSize) {
+        if (animalSize == null || animalSize.trim().isEmpty()) {
+            return false;
+        }
+        String lowerCase = animalSize.trim().toLowerCase();
+        return lowerCase.equals("small") || lowerCase.equals("medium") || lowerCase.equals("large");
+    }
+    
+    // not sure if this works, template i guess
+    private boolean isValidMinPlayers(String minPlayers, int maxPlayers) {
+        try {
+            int min = Integer.parseInt(minPlayers);
+            return min >= 0 && min <= maxPlayers;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+    
+    // not sure if this works, template i guess
+    private boolean isValidMaxPlayers(String maxPlayers, int minPlayers) {
+        try {
+            int max = Integer.parseInt(maxPlayers);
+            return max >= minPlayers && max >= 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+ 
+    
     @FXML
     void btnBuyHandler(ActionEvent event) {
     	purchase(currentToy);
