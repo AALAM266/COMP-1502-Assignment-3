@@ -3,6 +3,8 @@ package controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import exceptions.MinMaxException;
+import exceptions.NegativePriceException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -172,6 +174,13 @@ public class Manager extends AppController implements Initializable {
     		listViewToyInvHome.getItems().addAll(toyInventory);
     	}
     
+    }
+    
+    @FXML
+    void btnSaveHandler(ActionEvent event) throws NegativePriceException, MinMaxException {
+    	addNewToy(addtoySnField.getText(), addtoyNameField.getText(), addtoyBrandField.getText(),
+    			addtoyPriceField.getText(), addtoyAvailcountField.getText(), 
+    			addtoyAgeAppField.getText(), categoryDropDown.getValue());
     }
     
     @FXML
