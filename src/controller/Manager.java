@@ -85,7 +85,13 @@ public class Manager extends AppController implements Initializable {
     private TextField figureClassField;
 
     @FXML
-    private Label lblError;
+    private Label lblErrorAdd;
+
+    @FXML
+    private Label lblErrorHome;
+
+    @FXML
+    private Label lblErrorRemove;
     
     @FXML
     private Label lblName;
@@ -143,7 +149,7 @@ public class Manager extends AppController implements Initializable {
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		categoryDropDown.setItems(FXCollections.observableArrayList("Figure", "Animal", "Puzzle", "Board Game"));
-		listViewToyInvHome.getItems().addAll(toyInventory);
+//		listViewToyInvHome.getItems().addAll(toyInventory);
     	listViewToyInvHome.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Toys>() {
 
 			@Override
@@ -169,7 +175,7 @@ public class Manager extends AppController implements Initializable {
             return false;
         }
     }
-    
+
     private boolean isValidToyAvailabilityCount(String count) {
         try {
             int countValue = Integer.parseInt(count);
@@ -178,7 +184,7 @@ public class Manager extends AppController implements Initializable {
             return false;
         }
     }
-    
+
     private boolean isValidToyAgeRating(String age) {
         try {
             int ageValue = Integer.parseInt(age);
@@ -187,12 +193,12 @@ public class Manager extends AppController implements Initializable {
             return false;
         }
     }
-    
+
     // this should validate any string, checks if its empty and/or case insensitivity (name, brand, board game designer, animal material etc..)
     private boolean isValidString(String str) {
         return str != null && !str.trim().isEmpty();
     }
-    
+
     // this checks the figure class and makes sure it matches the 3 types of figures
     private boolean isValidFigureClassification(String classification) {
         if (classification == null || classification.trim().isEmpty()) {
@@ -201,7 +207,7 @@ public class Manager extends AppController implements Initializable {
         String lowerCaseClassification = classification.trim().toLowerCase();
         return lowerCaseClassification.equals("action") || lowerCaseClassification.equals("doll") || lowerCaseClassification.equals("historic");
     }
-    
+
     // same thing but for puzzle type
     private boolean isValidPuzzleType(String type) {
         if (type == null || type.trim().isEmpty()) {
@@ -210,7 +216,7 @@ public class Manager extends AppController implements Initializable {
         String lowerCaseType = type.trim().toLowerCase();
         return lowerCaseType.equals("mechanical") || lowerCaseType.equals("cryptic") || lowerCaseType.equals("logic") || lowerCaseType.equals("trivia") || lowerCaseType.equals("riddle");
     }
-    
+
     // ""
     private boolean isValidAnimalSize(String animalSize) {
         if (animalSize == null || animalSize.trim().isEmpty()) {
@@ -219,7 +225,7 @@ public class Manager extends AppController implements Initializable {
         String lowerCase = animalSize.trim().toLowerCase();
         return lowerCase.equals("small") || lowerCase.equals("medium") || lowerCase.equals("large");
     }
-    
+
     // not sure if this works, template i guess
     private boolean isValidMinPlayers(String minPlayers, int maxPlayers) {
         try {
@@ -229,7 +235,7 @@ public class Manager extends AppController implements Initializable {
             return false;
         }
     }
-    
+
     // not sure if this works, template i guess
     private boolean isValidMaxPlayers(String maxPlayers, int minPlayers) {
         try {
@@ -239,19 +245,16 @@ public class Manager extends AppController implements Initializable {
             return false;
         }
     }
- 
     
     @FXML
     void btnBuyHandler(ActionEvent event) {
     	purchase(currentToy);
     	if (toyInventory.contains(currentToy)) {
     		listViewToyInvHome.getItems().removeAll();
-    		listViewToyInvHome.getItems().addAll(toyInventory);
     	}
     	
     	else {
     		listViewToyInvHome.getItems().removeAll(currentToy);
-    		listViewToyInvHome.getItems().addAll(toyInventory);
     	}
     
     }
@@ -271,18 +274,33 @@ public class Manager extends AppController implements Initializable {
     @FXML
     void btnSearchHandler(ActionEvent event) {
 		if (btnSN.isSelected()) {
-			search(1,txtFieldSNSearch.getText());
-			listViewToyInvHome.getItems().addAll(toySearchResults);
+			lblErrorHome.setText("");
+			listViewToyInvHome.getItems().removeAll(toyInventory);
+			if (isValidSerialNumber(txtFieldSNSearch.getText())) {
+				listViewToyInvHome.getItems().addAll(search(1, txtFieldSNSearch.getText()));
+				lblErrorHome.setText("Succesfully Purchased!");
+			}
+				
 		}
 		
 		else if (btnName.isSelected()) { 
-			search(2, txtFieldNameSearch.getText());
-			listViewToyInvHome.getItems().addAll(toySearchResults);
+			lblErrorHome.setText("");
+			listViewToyInvHome.getItems().removeAll(toyInventory);
+			if (isValidString(txtFieldNameSearch.getText())) {
+				search(2, txtFieldNameSearch.getText());
+				lblErrorHome.setText("Succesfully Purchased!");
+			}
+	
 		}
 		
 		else if (btnType.isSelected()) {
-			search(3, txtFieldTypeSearch.getText());
-			listViewToyInvHome.getItems().addAll(toySearchResults);
+			lblErrorHome.setText("");
+			listViewToyInvHome.getItems().removeAll(toyInventory);
+			if (isValidString(txtFieldTypeSearch.getText())) {
+				search(3, txtFieldTypeSearch.getText());
+				lblErrorHome.setText("Succesfully Purchased!");
+			}
+			
 		}
     }
     
