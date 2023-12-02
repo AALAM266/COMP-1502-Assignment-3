@@ -86,7 +86,7 @@
                                     <Label layoutX="11.0" layoutY="216.0" text="Price" />
                                     <Label layoutX="5.0" layoutY="257.0" text="Available-Count" />
                                     <Label layoutX="4.0" layoutY="299.0" text="Age-appropriate" />
-                                    <Button fx:id="btnSave" layoutX="32.0" layoutY="358.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="226.0" text="Save">
+                                    <Button fx:id="btnSave" layoutX="32.0" layoutY="358.0" mnemonicParsing="false" onAction="#btnSaveHandler" prefHeight="44.0" prefWidth="226.0" text="Save">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
