@@ -713,6 +713,42 @@ private Scanner input; // Scanner object to get the user input
 		System.out.println();
 		return serialNumber;
 	}
+	
+	/**
+	 * Prompts the user for the serial number (only if adding searching, buying or removing)
+	 * @return the serial number of the toy
+	 */
+	public String promptSN(String sNumber) {
+		System.out.print("Enter Serial Number (SN): ");
+		String serialNumber = "0";
+		Long serialNumber1;
+		
+		try {
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		if (input.hasNextLong()) {
+			serialNumber1 = Long.parseLong(input.nextLine().trim().toLowerCase());
+		} else {
+			System.out.println();
+			System.out.println("Serial Number should only contain digits! Try again.");
+			System.out.println();
+			input.nextLine();  
+			return promptSN();  
+		}
+		
+		if (String.valueOf(serialNumber1).length() != 10) {
+			System.out.println();
+			System.out.println("The Serial Number's length MUST Be 10 Digits! Try again.");
+			System.out.println();
+			return promptSN();  
+		}
+		serialNumber = String.valueOf(serialNumber1);
+		System.out.println();
+		return serialNumber;
+	}
 
 
 	/**
