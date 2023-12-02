@@ -5,8 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-import org.hamcrest.core.StringContains;
-
 import exceptions.MinMaxException;
 import exceptions.NegativePriceException;
 import model.Animals;
@@ -273,13 +271,20 @@ public class AppController {
 	/**
 	 * This method is called from the launchApplication method, it will prompt the user for all of the toy's attributes then it
 	 * will add it to the arraylist that will eventually get stored in the txt file
+	 * @param string7 
+	 * @param string6 
+	 * @param string5 
+	 * @param string4 
+	 * @param string3 
+	 * @param string2 
+	 * @param serialNumber 
 	 * @throws NegativePriceException 
 	 */
-	public void addNewToy() throws NegativePriceException, MinMaxException {
+	public void addNewToy(String sNumber, String name, String brand1, String price1, String availableCount1, String appropriateAge1, String type1) throws NegativePriceException, MinMaxException {
 		boolean flag3 = true;
 		
-		String serialNumber = appMenu.promptSN(toyInventory);
-		String name = appMenu.promptToyName();
+		String serialNumber = appMenu.promptSN(toyInventory, sNumber);
+		String name1 = appMenu.promptToyName();
 		String brand = appMenu.promptBrand();
 		
 		double price = appMenu.promptToyPrice();
@@ -308,7 +313,7 @@ public class AppController {
 				
 				String designers = appMenu.promptDesigners();
 				
-				t = new BoardGames(serialNumber, name, brand, price, availableCount, 
+				t = new BoardGames(serialNumber, name1, brand, price, availableCount, 
 						appropriateAge, "BoardGame", minPlayers, maxPlayers, designers);
 				toyInventory.add(t);
 				flag3 = false;
@@ -331,7 +336,7 @@ public class AppController {
 					}
 				}
 				
-				t = new Figures(serialNumber, name, brand, price, availableCount, 
+				t = new Figures(serialNumber, name1, brand, price, availableCount, 
 						appropriateAge, "figure", classification);
 				toyInventory.add(t);
 				
@@ -355,7 +360,7 @@ public class AppController {
 						appMenu.showInvalidChoice();
 					}
 				}
-				t = new Animals(serialNumber, name, brand, price, availableCount, 
+				t = new Animals(serialNumber, name1, brand, price, availableCount, 
 						appropriateAge, "animal", material, size);
 				toyInventory.add(t);
 				
@@ -380,7 +385,7 @@ public class AppController {
 						appMenu.showInvalidChoice();
 					}
 				}
-				t = new Puzzles(serialNumber, name, brand, price, availableCount, 
+				t = new Puzzles(serialNumber, name1, brand, price, availableCount, 
 						appropriateAge, "puzzle", puzzleType);
 				toyInventory.add(t);
 				
