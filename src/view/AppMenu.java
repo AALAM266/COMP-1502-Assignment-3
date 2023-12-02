@@ -158,6 +158,46 @@ private Scanner input; // Scanner object to get the user input
 		return serialNumber;
 	}
 
+	/**
+	 * Prompts the user for the serial number for when they want to add a toy
+	 * @param toyInventory arraylist containing the inventory
+	 * @return the serial number for the toy
+	 */
+	public String promptSN(ArrayList<Toys> toyInventory, String sNumber) { 
+		System.out.print("Enter Serial Number (SN): ");
+		String serialNumber = "0";
+		Long serialNumber1;
+		
+		if (input.hasNextLong()) {
+			serialNumber1 = Long.parseLong(input.nextLine().trim().toLowerCase());
+		} else {
+			System.out.println();
+			System.out.println("Serial Number should only contain digits! Try again.");
+			System.out.println();
+			input.nextLine();  
+			return promptSN(toyInventory);  
+		}
+		
+		if (String.valueOf(serialNumber1).length() != 10) {
+			System.out.println();
+			System.out.println("The Serial Number's length MUST Be 10 Digits! Try again.");
+			System.out.println();
+			return promptSN(toyInventory);  
+		}
+		
+		serialNumber = String.valueOf(serialNumber1);
+	
+		for (Toys t : toyInventory) {
+			if (serialNumber.equals(t.getSerialNumber())) {
+				System.out.println();
+				System.out.println("A Toy With This Serial Number Already Exists! Try Again.");
+				System.out.println();
+				return promptSN(toyInventory);  
+			}	
+		}	
+		System.out.println();
+		return serialNumber;
+	}
 	
 	/**
 	 * Prompts the user for the toy name for searching, purchasing, or adding purposes
