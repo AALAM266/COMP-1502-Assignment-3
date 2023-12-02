@@ -87,12 +87,13 @@ public class AppController {
 	/**
 	 * This method is called from the launchApplication method, it will search for toys based on the user input and allow the user to purchase them
 	 * @param sNumber 
+	 * @return 
 	 */
-	public void search(int option, String specifier) {
+	public ArrayList<Toys> search(int option, String specifier) {
 		
-		boolean flag = true;
-			
-		while (flag) {
+//		boolean flag = true;
+//			
+//		while (flag) {
 			
 			boolean flag2 = true;
 			ArrayList<Toys> toySearchResults = new ArrayList<>();
@@ -105,14 +106,14 @@ public class AppController {
 			switch (option) {
 
 			case 1:
-				String serialNumber = appMenu.promptSN(specifier);
+				String serialNumber = specifier;
 				
-				appMenu.showSearchResultsP1(toyInventory);
+			//	appMenu.showSearchResultsP1(toyInventory);
 				boolean toyFound = false;
 				for (Toys t : toyInventory) {
 					
 					if (serialNumber.equalsIgnoreCase(t.getSerialNumber())) {
-						appMenu.showSearchResultsP2(t, n);
+			//			appMenu.showSearchResultsP2(t, n);
 						toySearchResults.add(t);
 						n += 1;
 						t1 = t;
@@ -123,33 +124,33 @@ public class AppController {
 					appMenu.showSerialNumberNotFound();
 				}
 				
-				while (flag2) {
-					choice = appMenu.showSearchResultsP3(n);
-					
-					if (choice == n) {
-						flag2 = false;
-						break;
-					}
-					
-					else if (choice > n || choice < 1) {
-						appMenu.showInvalidChoice();
-					}
-					
-					else {
-						purchase(t1);
-						
-						flag2 = false;
-						
-					}
-					
-				}
+//				while (flag2) {
+//					choice = appMenu.showSearchResultsP3(n);
+//					
+//					if (choice == n) {
+//						flag2 = false;
+//						break;
+//					}
+//					
+//					else if (choice > n || choice < 1) {
+//						appMenu.showInvalidChoice();
+//					}
+//					
+//					else {
+//						
+//						
+//						flag2 = false;
+//						
+//					}
+//					
+//				}
+				
+				return toySearchResults;
 			
-				break;
-				
 			case 2:
-				String name = appMenu.promptToyName();
+				String name = specifier;
 				
-				appMenu.showSearchResultsP1(toyInventory);
+			//	appMenu.showSearchResultsP1(toyInventory);
 				toyFound = false;
 				for (Toys t : toyInventory) {
 					
@@ -166,38 +167,38 @@ public class AppController {
 					appMenu.showToyNameNotFound();
 				}
 				
-				while (flag2) {
-					choice = appMenu.showSearchResultsP3(n);
-					boolean invalidCheck = true;
-					
-					if (choice == n) {
-						flag2 = false;
-						break;
-					}
-					
-					else if (choice > n || choice < 1) {
-						appMenu.showInvalidChoice();
-						invalidCheck = false;
-
-					}
-					
-					else if (choice < n && choice >= 1 && invalidCheck){
-						toySearchResults.remove(choice - 1);
-						
-						t1.decreaseAvailableCount();
-						appMenu.showTransactionSuccess();
-						appMenu.promptPressEnter();
-						flag2 = false;
-					}
-					
-				}
-				break;
+//				while (flag2) {
+//					choice = appMenu.showSearchResultsP3(n);
+//					boolean invalidCheck = true;
+//					
+//					if (choice == n) {
+//						flag2 = false;
+//						break;
+//					}
+//					
+//					else if (choice > n || choice < 1) {
+//						appMenu.showInvalidChoice();
+//						invalidCheck = false;
+//
+//					}
+//					
+//					else if (choice < n && choice >= 1 && invalidCheck){
+//						toySearchResults.remove(choice - 1);
+//						
+//						t1.decreaseAvailableCount();
+//						appMenu.showTransactionSuccess();
+//						appMenu.promptPressEnter();
+//						flag2 = false;
+//					}
+//					
+//				}
 				
+				return toySearchResults;
 			case 3:
 				boolean flag1 = true;
 				toyFound = false;
 				while (flag1) {		
-					String type = appMenu.promptType();
+					String type = specifier;
 					switch (type) {
 					case "boardgame":
 					case "animal":
@@ -208,9 +209,10 @@ public class AppController {
 	
 					default:
 						appMenu.showInvalidChoice();
+						flag1 = true;
 					}
 				
-				appMenu.showSearchResultsP1(toyInventory);
+		//		appMenu.showSearchResultsP1(toyInventory);
 				for (Toys t : toyInventory) {
 					
 					if (type.equalsIgnoreCase(t.getToyType())) {
@@ -226,37 +228,40 @@ public class AppController {
 					appMenu.showToyTypeNotFound();
 				}
 				
-				while (flag2) {
-					choice = appMenu.showSearchResultsP3(n);
-					
-					if (choice == n) {
-						flag2 = false;
-						break;
-					}
-					
-					else if (choice > n || choice < 1) {
-						appMenu.showInvalidChoice();
-					}
-					
-					else {
-						toySearchResults.remove(choice - 1);
-						t1.decreaseAvailableCount();
-						appMenu.showTransactionSuccess();
-						appMenu.promptPressEnter();
-					}
-					
-				}
-				break;
+//				while (flag2) {
+//					choice = appMenu.showSearchResultsP3(n);
+//					
+//					if (choice == n) {
+//						flag2 = false;
+//						break;
+//					}
+//					
+//					else if (choice > n || choice < 1) {
+//						appMenu.showInvalidChoice();
+//					}
+//					
+//					else {
+//						toySearchResults.remove(choice - 1);
+//						t1.decreaseAvailableCount();
+//						appMenu.showTransactionSuccess();
+//						appMenu.promptPressEnter();
+//					}
+//					
+//				}
 				
-			case 4:
-				flag = false;
-				break;
+				return toySearchResults;
+			
+				
+//			case 4:
+//				flag = false;
+//				break;
 				
 			default:
 				appMenu.showInvalidChoice();
 			}
 			
-		}
+		
+		return toyInventory;
 	
 	}
 	
@@ -589,7 +594,7 @@ public class AppController {
 					fw.write(p.format());
 				}
 			}	
-		appMenu.showSavingMsg();
+	//	appMenu.showSavingMsg();
 	} catch (IOException e) {
 		e.printStackTrace();
 		
