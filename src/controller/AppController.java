@@ -28,7 +28,8 @@ public class AppController {
 
     private final String FILENAME = "res/toys.txt";
     private AppMenu appMenu;
-    private ArrayList<Toys> toyInventory;
+    public ArrayList<Toys> toyInventory;
+    public ArrayList<Toys> toySearchResults = new ArrayList<>();
     
 	/**
 	 * Constructor for the AppController class
@@ -40,7 +41,7 @@ public class AppController {
     	
     	loadData();
     	
-    	launchApplication();
+    	//launchApplication();
     }
     
     /**
@@ -49,44 +50,45 @@ public class AppController {
 	 * 
 	 * @throws Exception
 	 */
-	public void launchApplication() throws Exception { 
-		boolean flag = true;
-		int option;
-		appMenu.showWelcomeMsg();
-
-		while (flag) {
-			appMenu.showMainMenu();
-			option = appMenu.enterOption();
-
-			switch (option) {
-
-			case 1:
-				searchAndPurchase();
-				break;
-			case 2:
-				addNewToy();
-				break;
-			case 3:
-				removeToy();
-				break;
-			case 4:
-				makeGiftSuggestion();
-				break;
-			case 5:
-				save();
-				flag = false;
-				break;
-			default:
-				appMenu.showInvalidChoice();
-			}
-		}
-
-	}
+//	public void launchApplication() throws Exception { 
+//		boolean flag = true;
+//		int option;
+//		appMenu.showWelcomeMsg();
+//
+//		while (flag) {
+//			appMenu.showMainMenu();
+//			option = appMenu.enterOption();
+//
+//			switch (option) {
+//
+//			case 1:
+//				searchAndPurchase();
+//				break;
+//			case 2:
+//				addNewToy();
+//				break;
+//			case 3:
+//				removeToy();
+//				break;
+//			case 4:
+//				makeGiftSuggestion();
+//				break;
+//			case 5:
+//				save();
+//				flag = false;
+//				break;
+//			default:
+//				appMenu.showInvalidChoice();
+//			}
+//		}
+//
+//	}
 
 	/**
 	 * This method is called from the launchApplication method, it will search for toys based on the user input and allow the user to purchase them
+	 * @param sNumber 
 	 */
-	private void searchAndPurchase() {
+	public void search(int option, String specifier) {
 		
 		boolean flag = true;
 			
@@ -94,8 +96,8 @@ public class AppController {
 			
 			boolean flag2 = true;
 			ArrayList<Toys> toySearchResults = new ArrayList<>();
-			appMenu.showSearchMenu();
-			int option = appMenu.enterOption();
+			//appMenu.showSearchMenu();
+		//	int option = appMenu.enterOption();
 			int n = 1;
 			int choice = -1;
 			Toys t1 = null;
@@ -103,8 +105,7 @@ public class AppController {
 			switch (option) {
 
 			case 1:
-				String serialNumber = appMenu.promptSN();
-				
+				String serialNumber = appMenu.promptSN(specifier);
 				
 				appMenu.showSearchResultsP1(toyInventory);
 				boolean toyFound = false;
@@ -135,10 +136,8 @@ public class AppController {
 					}
 					
 					else {
-						toySearchResults.remove(choice - 1);
-						t1.decreaseAvailableCount();
-						appMenu.showTransactionSuccess();
-						appMenu.promptPressEnter();
+						purchase(t1);
+						
 						flag2 = false;
 						
 					}
@@ -260,12 +259,20 @@ public class AppController {
 	
 	}
 	
+	public void purchase(Toys currentToy) {
+		currentToy.decreaseAvailableCount();
+		if (currentToy.getAvailabityCount() == 0) {
+			toyInventory.remove(currentToy);
+		}
+		save();
+	}
+
 	/**
 	 * This method is called from the launchApplication method, it will prompt the user for all of the toy's attributes then it
 	 * will add it to the arraylist that will eventually get stored in the txt file
 	 * @throws NegativePriceException 
 	 */
-	private void addNewToy() throws NegativePriceException, MinMaxException {
+	public void addNewToy() throws NegativePriceException, MinMaxException {
 		boolean flag3 = true;
 		
 		String serialNumber = appMenu.promptSN(toyInventory);
@@ -388,9 +395,10 @@ public class AppController {
 	
 	/**
 	 * This method is called from the launchApplication method, it will prompt the user for the serial number of the toy they want to remove
+	 * @param sNumber 
 	 */
-	private void removeToy() {
-		String serialNumber = appMenu.promptSN();
+	public void removeToy(String sNumber) {
+		String serialNumber = appMenu.promptSN(sNumber);
 		boolean toyRemoval = false;
 		Toys t1 = null;
 		for (Toys t : toyInventory) {
@@ -432,7 +440,7 @@ public class AppController {
 		}
 		else {
 			appMenu.showSerialNumberNotFound();
-			removeToy();
+			removeToy(sNumber);
 		}
 	}
 	
@@ -440,7 +448,7 @@ public class AppController {
 	 * This method is called from the launchApplication method, it will prompt the user for either the age rating of the toy, or the type, or the price range
 	 * The information will then be used to recommend a gift for the user to buy
 	 */
-	private void makeGiftSuggestion() {
+	public void makeGiftSuggestion() {
 		final double MAX_PRICE = 1000000;
 		int giftCounter = 0;
 		int n = 1;
@@ -551,7 +559,7 @@ public class AppController {
 	 * data into the txt file when the program is shut down
 	 * @throws Exception
 	 */
-	private void save() { // Save data into the txt file when the user chooses the save and exit option
+	public void save() { // Save data into the txt file when the user chooses the save and exit option
 		try(FileWriter fw = new FileWriter(FILENAME, false)) {
 
 			for (Toys t : toyInventory) {
