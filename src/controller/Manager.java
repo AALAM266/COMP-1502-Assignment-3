@@ -153,6 +153,12 @@ public class Manager extends AppController implements Initializable {
 		
 	}
     
+    private boolean isValidSerialNumber(String serialNumber) {
+        return serialNumber != null
+               && serialNumber.length() == 10
+               && serialNumber.chars().allMatch(Character::isDigit);
+    }
+    
     @FXML
     void btnBuyHandler(ActionEvent event) {
     	purchase(currentToy);
