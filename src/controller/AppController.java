@@ -29,7 +29,7 @@ public class AppController {
     private final String FILENAME = "res/toys.txt";
     private AppMenu appMenu;
     public ArrayList<Toys> toyInventory;
-    public ArrayList<Toys> toySearchResults = new ArrayList<>();
+    public ArrayList<Toys> toySearchResults;
     
 	/**
 	 * Constructor for the AppController class
@@ -92,7 +92,7 @@ public class AppController {
 	public ArrayList<Toys> search(int option, String specifier) {
 
 			boolean flag2 = true;
-			ArrayList<Toys> toySearchResults = new ArrayList<>();
+			toySearchResults = new ArrayList<>();
 			int n = 1;
 			int choice = -1;
 			Toys t1 = null;
@@ -133,23 +133,8 @@ public class AppController {
 				
 				return toySearchResults;
 			case 3:
-				boolean flag1 = true;
-				toyFound = false;
-				while (flag1) {		
-					String type = specifier;
-					switch (type) {
-					case "boardgame":
-					case "animal":
-					case "figure":
-					case "puzzle":
-						flag1 = false;
-						break;
-	
-					default:
-						appMenu.showInvalidChoice();
-						flag1 = true;
-					}
-				
+				String type = specifier;
+		
 				for (Toys t : toyInventory) {
 					
 					if (type.equalsIgnoreCase(t.getToyType())) {
@@ -160,16 +145,10 @@ public class AppController {
 						toyFound = true;
 					}
 				}
-				}
-			
-							
+		
 				return toySearchResults;
-				
-			default:
-				appMenu.showInvalidChoice();
 			}
 			
-		
 		return toyInventory;
 	
 	}
