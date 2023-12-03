@@ -149,7 +149,6 @@ public class Manager extends AppController implements Initializable {
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		categoryDropDown.setItems(FXCollections.observableArrayList("Figure", "Animal", "Puzzle", "Board Game"));
-//		listViewToyInvHome.getItems().addAll(toyInventory);
     	listViewToyInvHome.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Toys>() {
 
 			@Override
@@ -167,13 +166,18 @@ public class Manager extends AppController implements Initializable {
                && serialNumber.chars().allMatch(Character::isDigit);
     }
     
-    private boolean isValidToyPrice(String price) {
-        try {
-            int priceValue = Integer.parseInt(price);
-            return priceValue >= 0;
-        } catch (NumberFormatException e) {
-            return false;
+    private boolean isValidToyPrice(String price) throws NegativePriceException {
+    	boolean isValid = false;
+    	double priceValue = Double.parseDouble(price);
+    	if (priceValue >= 0) {
+            	isValid = true;  	
         }
+    	
+    	else {
+    		throw new NegativePriceException();  
+    	}
+
+		return isValid;
     }
 
     private boolean isValidToyAvailabilityCount(String count) {
@@ -226,62 +230,164 @@ public class Manager extends AppController implements Initializable {
         }
         String lowerCase = animalSize.trim().toLowerCase();
         return lowerCase.equals("small") || lowerCase.equals("medium") || lowerCase.equals("large") ||
-        lowerCase.equals("s") || lowerCase.equals("m") || lowerCase.equals("l");
+                lowerCase.equals("s") || lowerCase.equals("m") || lowerCase.equals("l");
     }
 
     // not sure if this works, template i guess
-    private boolean isValidMinPlayers(String minPlayers, int maxPlayers) {
+    private boolean isValidMinPlayers(String minPlayers) {
         try {
             int min = Integer.parseInt(minPlayers);
-            return min >= 0 && min <= maxPlayers;
+            return min >= 0;
         } catch (NumberFormatException e) {
             return false;
         }
     }
 
     // not sure if this works, template i guess
-    private boolean isValidMaxPlayers(String maxPlayers, int minPlayers) {
-        try {
-            int max = Integer.parseInt(maxPlayers);
-            return max >= minPlayers && max >= 0;
-        } catch (NumberFormatException e) {
-            return false;
+    private boolean isValidMaxPlayers(String maxPlayers, String minPlayers) throws MinMaxException {
+    	boolean isValid = false;
+        int max = Integer.parseInt(maxPlayers);
+        if (max >= Integer.parseInt(minPlayers) && max >= 0) {
+        	isValid = true;  	
         }
+     
+    	else {
+    		throw new MinMaxException();  
+    	}
+
+		return isValid;
     }
     
     @FXML
     void btnBuyHandler(ActionEvent event) {
+    	ApplicationLogger.logInfo("Buy Button Clicked");
     	purchase(currentToy);
     	if (toyInventory.contains(currentToy)) {
     		listViewToyInvHome.getItems().removeAll();
+    		ApplicationLogger.logInfo("Purchased " + currentToy.toString());
+    		lblErrorHome.setText("Successfully Purchased!");
     	}
     	
     	else {
     		listViewToyInvHome.getItems().removeAll(currentToy);
+    		lblErrorHome.setText("Item Does Not Exist!");
     	}
     
     }
     
     @FXML
-    void btnSaveHandler(ActionEvent event) throws NegativePriceException, MinMaxException {
-    	addNewToy(addtoySnField.getText(), addtoyNameField.getText(), addtoyBrandField.getText(),
-    			addtoyPriceField.getText(), addtoyAvailcountField.getText(), 
-    			addtoyAgeAppField.getText(), categoryDropDown.getValue());
-    }
+    void btnSaveHandler(ActionEvent event) throws NegativePriceException, MinMaxException { 
+    	ApplicationLogger.logInfo("Save Button Clicked");
+    	lblErrorRemove.setText("");
+		ApplicationLogger.logInfo("Attempted Saving: " + addtoySnField.getText() + " " + addtoyNameField.getText() + " " + addtoyBrandField.getText() + " " + 
+				addtoyPriceField.getText() + " " + addtoyAvailcountField.getText() + " " + addtoyAgeAppField.getText()
+				+ " " + figureClassField.getText() + " " + animalMaterialField.getText() + " " + animalSizeField.getText() + " " + puzzleTypeField.getText()
+				 + " " + minnumField.getText() + " " + maxnumField.getText() + " " + designersField.getText());
+		
+//		try {
+//			
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
+		
+    	if (isValidSerialNumber(addtoySnField.getText()) && isValidString(addtoyNameField.getText()) 
+    			&& isValidString(addtoyBrandField.getText()) && isValidToyPrice(addtoyPriceField.getText()) 
+    			&& isValidToyAvailabilityCount(addtoyAvailcountField.getText()) && isValidToyAgeRating(addtoyAgeAppField.getText())){
+    		
+    		switch (categoryDropDown.getValue().trim().toLowerCase()) {
+			case "figure":
+				if (isValidFigureClassification(figureClassField.getText())) {
+					
+					String newToy = addNewFigure(addtoySnField.getText(), addtoyNameField.getText(), addtoyBrandField.getText(),
+							addtoyPriceField.getText(), addtoyAvailcountField.getText(), 
+							addtoyAgeAppField.getText(), figureClassField.getText());
+					lblErrorAdd.setText("Successfully Added!");
+					ApplicationLogger.logInfo("Added: " + newToy);
+				}
+				
+				break;
+				
+			case "animal":
+				
+				if (isValidString(animalMaterialField.getText()) && isValidAnimalSize(animalSizeField.getText())) {
+					
+					String newToy = addNewAnimal(addtoySnField.getText(), addtoyNameField.getText(), addtoyBrandField.getText(),
+							addtoyPriceField.getText(), addtoyAvailcountField.getText(), 
+							addtoyAgeAppField.getText(), animalMaterialField.getText(), animalSizeField.getText());
+					lblErrorAdd.setText("Successfully Added!");
+					ApplicationLogger.logInfo("Added: " + newToy);
+				}
+				
+				break;
+				
+			case "puzzle":
+				
+				if (isValidPuzzleType(puzzleTypeField.getText())) {
+					
+					String newToy = addNewPuzzle(addtoySnField.getText(), addtoyNameField.getText(), addtoyBrandField.getText(),
+							addtoyPriceField.getText(), addtoyAvailcountField.getText(), 
+							addtoyAgeAppField.getText(), puzzleTypeField.getText());
+					lblErrorAdd.setText("Successfully Added!");
+					ApplicationLogger.logInfo("Added: " + newToy);
+				}
+				
+				break;
+
+				
+			case "boardgame":
+				
+				if (isValidMinPlayers(minnumField.getText()) && isValidMaxPlayers(maxnumField.getText(), minnumField.getText()) && isValidString(designersField.getText())) {
+					
+					String newToy = addNewBoardGame(addtoySnField.getText(), addtoyNameField.getText(), addtoyBrandField.getText(),
+							addtoyPriceField.getText(), addtoyAvailcountField.getText(), addtoyAgeAppField.getText(), minnumField.getText(), 
+							maxnumField.getText(), designersField.getText());
+					lblErrorAdd.setText("Successfully Added!");
+					ApplicationLogger.logInfo("Added: " + newToy);
+				}
+	
+				break;
+			}
+    		
+    	}
+    	
+    	
+    }	
     
     @FXML
     void btnRemoveHandler(ActionEvent event) {
-    	removeToy(txtFieldSNRemove.getText());
+    	ApplicationLogger.logInfo("Remove Button Clicked");
+    	lblErrorRemove.setText("");
+		listViewToyInvRemove.getItems().removeAll(toyInventory);
+		ApplicationLogger.logInfo("Searched: " + txtFieldSNRemove.getText());
+    	if (isValidSerialNumber(txtFieldSNRemove.getText())) {
+    		if (removeToy(txtFieldSNRemove.getText())) {
+    			lblErrorRemove.setText("Successfully Removed!");
+    			ApplicationLogger.logInfo("Removed: " + txtFieldSNRemove.getText());
+    		}
+    		
+    		else {
+    			lblErrorRemove.setText("Serial Number Does Not Exist!");
+    		}
+    	}
+    	
+    	else {
+			lblErrorRemove.setText("Invalid Input! Try again.");
+		}
+    	
     }
     
     @FXML
     void btnSearchHandler(ActionEvent event) {
+    	ApplicationLogger.logInfo("Search Button Clicked");
 		if (btnSN.isSelected()) {
 			lblErrorHome.setText("");
 			listViewToyInvHome.getItems().removeAll(toyInventory);
+			ApplicationLogger.logInfo("Searched: " + txtFieldSNSearch.getText());
 			if (isValidSerialNumber(txtFieldSNSearch.getText())) {
 				listViewToyInvHome.getItems().addAll(search(1, txtFieldSNSearch.getText()));
-				lblErrorHome.setText("Succesfully Purchased!");
+			}
+			else {
+				lblErrorHome.setText("Invalid Input! Try again.");
 			}
 				
 		}
@@ -289,9 +395,12 @@ public class Manager extends AppController implements Initializable {
 		else if (btnName.isSelected()) { 
 			lblErrorHome.setText("");
 			listViewToyInvHome.getItems().removeAll(toyInventory);
+			ApplicationLogger.logInfo("Searched: " + txtFieldNameSearch.getText());
 			if (isValidString(txtFieldNameSearch.getText())) {
 				search(2, txtFieldNameSearch.getText());
-				lblErrorHome.setText("Succesfully Purchased!");
+			}
+			else {
+				lblErrorHome.setText("Invalid Input! Try again.");
 			}
 	
 		}
@@ -299,15 +408,19 @@ public class Manager extends AppController implements Initializable {
 		else if (btnType.isSelected()) {
 			lblErrorHome.setText("");
 			listViewToyInvHome.getItems().removeAll(toyInventory);
+			ApplicationLogger.logInfo("Searched: " + txtFieldTypeSearch.getText());
 			if (isValidString(txtFieldTypeSearch.getText())) {
 				search(3, txtFieldTypeSearch.getText());
-				lblErrorHome.setText("Succesfully Purchased!");
+			}
+			else {
+				lblErrorHome.setText("Invalid Input! Try again.");
 			}
 			
 		}
     }
     
     @FXML void btnClearHandler(ActionEvent event) { 
+    	ApplicationLogger.logInfo("Clear Button Clicked");
     	txtFieldSNSearch.clear(); 
     	txtFieldNameSearch.clear(); 
     	txtFieldTypeSearch.clear(); 
@@ -315,7 +428,8 @@ public class Manager extends AppController implements Initializable {
     }
 
     @FXML
-    void btnNameHandlerr(ActionEvent event) {
+    void btnNameHandler(ActionEvent event) {
+    	ApplicationLogger.logInfo("Name Button Clicked");
     	btnSN.setSelected(false);
     	btnType.setSelected(false);
     	txtFieldSNSearch.setDisable(true);
@@ -325,6 +439,7 @@ public class Manager extends AppController implements Initializable {
 
     @FXML
     void btnSNHandler(ActionEvent event) {
+    	ApplicationLogger.logInfo("Serial Number Button Clicked");
     	btnName.setSelected(false);
     	btnType.setSelected(false);
     	txtFieldSNSearch.setDisable(false);
@@ -334,6 +449,7 @@ public class Manager extends AppController implements Initializable {
 
     @FXML
     void btnTypeHandler(ActionEvent event) {
+    	ApplicationLogger.logInfo("Type Button Clicked");
     	btnSN.setSelected(false);
     	btnName.setSelected(false);
     	txtFieldSNSearch.setDisable(true);
