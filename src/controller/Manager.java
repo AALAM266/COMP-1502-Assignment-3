@@ -512,7 +512,7 @@ public class Manager extends AppController implements Initializable {
 			break;
 
 			
-		case "board game":
+		case "boardgame":
 			minnumField.setDisable(false);
 			maxnumField.setDisable(false);
 			designersField.setDisable(false);
