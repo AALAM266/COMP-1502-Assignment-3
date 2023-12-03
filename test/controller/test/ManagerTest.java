@@ -6,11 +6,13 @@ import org.junit.jupiter.api.Test;
 import controller.Manager;
 import exceptions.MinMaxException;
 import exceptions.NegativePriceException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 
 class ManagerTest {
 
 	private Manager manager;
-	
+
     @Before
     public void setUp() {
         try {
@@ -19,6 +21,14 @@ class ManagerTest {
             e.printStackTrace();
             fail("Exception was thrown: " + e.getMessage());
         }
+    }
+    
+    @Test
+    void testLoadFXML() {
+        assertDoesNotThrow(() -> {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/lsview.fxml"));
+            assertNotNull(root);
+        });
     }
 
 	@Test
@@ -35,7 +45,7 @@ class ManagerTest {
 		assertThrows(NegativePriceException.class, () -> manager.isValidToyPrice("-5.00"));
 		assertThrows(NumberFormatException.class, () -> manager.isValidToyPrice("wrong"));
 	}
-	
+
     @Test
     public void testIsValidToyAvailabilityCount() {
         assertTrue(manager.isValidToyAvailabilityCount("10"));
