@@ -208,7 +208,12 @@ public class Manager extends AppController implements Initializable {
 
     // this should validate any string, checks if its empty and/or case insensitivity (name, brand, board game designer, animal material etc..)
     private boolean isValidString(String str) {
-        return str != null && !str.trim().isEmpty();
+        if (str == null) {
+            return false;
+        }
+
+        str = str.toLowerCase().trim();
+        return !str.isEmpty();
     }
 
     // this checks the figure class and makes sure it matches the 3 types of figures
