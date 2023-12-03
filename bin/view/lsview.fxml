@@ -62,7 +62,7 @@
                               <Button fx:id="btnSearch" layoutX="50.0" layoutY="331.0" mnemonicParsing="false" onAction="#btnSearchHandler" prefHeight="25.0" prefWidth="76.0" text="Search" />
                               <Button fx:id="btnClear" layoutX="156.0" layoutY="331.0" mnemonicParsing="false" onAction="#btnClearHandler" prefHeight="25.0" prefWidth="76.0" text="Clear" />
                               <Button fx:id="btnBuy" layoutX="61.0" layoutY="493.0" mnemonicParsing="false" onAction="#btnBuyHandler" prefHeight="25.0" prefWidth="160.0" text="Buy" />
-                              <Label fx:id="lblError" alignment="TOP_CENTER" layoutX="32.0" layoutY="379.0" prefHeight="89.0" prefWidth="218.0" textFill="RED" />
+                              <Label fx:id="lblErrorHome" alignment="TOP_CENTER" layoutX="32.0" layoutY="379.0" prefHeight="89.0" prefWidth="218.0" textFill="RED" />
                            </children>
                         </AnchorPane>
                   </content>
@@ -86,7 +86,7 @@
                                     <Label layoutX="11.0" layoutY="216.0" text="Price" />
                                     <Label layoutX="5.0" layoutY="257.0" text="Available-Count" />
                                     <Label layoutX="4.0" layoutY="299.0" text="Age-appropriate" />
-                                    <Button fx:id="btnSave" layoutX="32.0" layoutY="358.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="226.0" text="Save">
+                                    <Button fx:id="btnSave" layoutX="32.0" layoutY="358.0" mnemonicParsing="false" onAction="#btnSaveHandler" prefHeight="44.0" prefWidth="226.0" text="Save">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
@@ -148,6 +148,7 @@
                                     <TextField fx:id="designersField" layoutX="790.0" layoutY="395.0" />
                                     <TextField fx:id="maxnumField" layoutX="856.0" layoutY="355.0" prefHeight="25.0" prefWidth="83.0" />
                                     <TextField fx:id="minnumField" layoutX="856.0" layoutY="314.0" prefHeight="25.0" prefWidth="83.0" />
+                                    <Label fx:id="lblErrorAdd" alignment="TOP_CENTER" layoutX="36.0" layoutY="427.0" prefHeight="110.0" prefWidth="218.0" textFill="RED" />
                                  </children>
                               </AnchorPane>
                            </children></AnchorPane>
@@ -171,6 +172,7 @@
                                  </font>
                               </Label>
                               <Button fx:id="btnRemove" layoutX="74.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnRemoveHandler" prefHeight="25.0" prefWidth="160.0" text="Remove" />
+                              <Label fx:id="lblErrorRemove" alignment="TOP_CENTER" layoutX="45.0" layoutY="375.0" prefHeight="131.0" prefWidth="218.0" textFill="RED" />
                            </children>
                         </AnchorPane>
                      </content>
