@@ -205,7 +205,8 @@ public class Manager extends AppController implements Initializable {
             return false;
         }
         String lowerCaseClassification = classification.trim().toLowerCase();
-        return lowerCaseClassification.equals("action") || lowerCaseClassification.equals("doll") || lowerCaseClassification.equals("historic");
+        return lowerCaseClassification.equals("action") || lowerCaseClassification.equals("doll") || lowerCaseClassification.equals("historic") ||
+        		lowerCaseClassification.equals("a") || lowerCaseClassification.equals("d") || lowerCaseClassification.equals("h");
     }
 
     // same thing but for puzzle type
@@ -214,7 +215,8 @@ public class Manager extends AppController implements Initializable {
             return false;
         }
         String lowerCaseType = type.trim().toLowerCase();
-        return lowerCaseType.equals("mechanical") || lowerCaseType.equals("cryptic") || lowerCaseType.equals("logic") || lowerCaseType.equals("trivia") || lowerCaseType.equals("riddle");
+        return lowerCaseType.equals("mechanical") || lowerCaseType.equals("cryptic") || lowerCaseType.equals("logic") || lowerCaseType.equals("trivia") || lowerCaseType.equals("riddle") || 
+        		lowerCaseType.equals("m") || lowerCaseType.equals("c") || lowerCaseType.equals("l") || lowerCaseType.equals("r");
     }
 
     // ""
@@ -223,7 +225,8 @@ public class Manager extends AppController implements Initializable {
             return false;
         }
         String lowerCase = animalSize.trim().toLowerCase();
-        return lowerCase.equals("small") || lowerCase.equals("medium") || lowerCase.equals("large");
+        return lowerCase.equals("small") || lowerCase.equals("medium") || lowerCase.equals("large") ||
+        lowerCase.equals("s") || lowerCase.equals("m") || lowerCase.equals("l");
     }
 
     // not sure if this works, template i guess
