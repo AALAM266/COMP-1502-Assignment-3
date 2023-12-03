@@ -90,15 +90,9 @@ public class AppController {
 	 * @return 
 	 */
 	public ArrayList<Toys> search(int option, String specifier) {
-		
-//		boolean flag = true;
-//			
-//		while (flag) {
-			
+
 			boolean flag2 = true;
 			ArrayList<Toys> toySearchResults = new ArrayList<>();
-			//appMenu.showSearchMenu();
-		//	int option = appMenu.enterOption();
 			int n = 1;
 			int choice = -1;
 			Toys t1 = null;
@@ -108,49 +102,22 @@ public class AppController {
 			case 1:
 				String serialNumber = specifier;
 				
-			//	appMenu.showSearchResultsP1(toyInventory);
 				boolean toyFound = false;
 				for (Toys t : toyInventory) {
 					
 					if (serialNumber.equalsIgnoreCase(t.getSerialNumber())) {
-			//			appMenu.showSearchResultsP2(t, n);
 						toySearchResults.add(t);
 						n += 1;
 						t1 = t;
 						toyFound = true;
 					}				
 				}
-				if (!toyFound) {
-					appMenu.showSerialNumberNotFound();
-				}
-				
-//				while (flag2) {
-//					choice = appMenu.showSearchResultsP3(n);
-//					
-//					if (choice == n) {
-//						flag2 = false;
-//						break;
-//					}
-//					
-//					else if (choice > n || choice < 1) {
-//						appMenu.showInvalidChoice();
-//					}
-//					
-//					else {
-//						
-//						
-//						flag2 = false;
-//						
-//					}
-//					
-//				}
 				
 				return toySearchResults;
 			
 			case 2:
 				String name = specifier;
 				
-			//	appMenu.showSearchResultsP1(toyInventory);
 				toyFound = false;
 				for (Toys t : toyInventory) {
 					
@@ -163,35 +130,6 @@ public class AppController {
 					}
 					
 				}
-				if (!toyFound) {
-					appMenu.showToyNameNotFound();
-				}
-				
-//				while (flag2) {
-//					choice = appMenu.showSearchResultsP3(n);
-//					boolean invalidCheck = true;
-//					
-//					if (choice == n) {
-//						flag2 = false;
-//						break;
-//					}
-//					
-//					else if (choice > n || choice < 1) {
-//						appMenu.showInvalidChoice();
-//						invalidCheck = false;
-//
-//					}
-//					
-//					else if (choice < n && choice >= 1 && invalidCheck){
-//						toySearchResults.remove(choice - 1);
-//						
-//						t1.decreaseAvailableCount();
-//						appMenu.showTransactionSuccess();
-//						appMenu.promptPressEnter();
-//						flag2 = false;
-//					}
-//					
-//				}
 				
 				return toySearchResults;
 			case 3:
@@ -212,7 +150,6 @@ public class AppController {
 						flag1 = true;
 					}
 				
-		//		appMenu.showSearchResultsP1(toyInventory);
 				for (Toys t : toyInventory) {
 					
 					if (type.equalsIgnoreCase(t.getToyType())) {
@@ -224,37 +161,9 @@ public class AppController {
 					}
 				}
 				}
-				if (!toyFound) {
-					appMenu.showToyTypeNotFound();
-				}
-				
-//				while (flag2) {
-//					choice = appMenu.showSearchResultsP3(n);
-//					
-//					if (choice == n) {
-//						flag2 = false;
-//						break;
-//					}
-//					
-//					else if (choice > n || choice < 1) {
-//						appMenu.showInvalidChoice();
-//					}
-//					
-//					else {
-//						toySearchResults.remove(choice - 1);
-//						t1.decreaseAvailableCount();
-//						appMenu.showTransactionSuccess();
-//						appMenu.promptPressEnter();
-//					}
-//					
-//				}
-				
-				return toySearchResults;
 			
-				
-//			case 4:
-//				flag = false;
-//				break;
+							
+				return toySearchResults;
 				
 			default:
 				appMenu.showInvalidChoice();
@@ -285,6 +194,93 @@ public class AppController {
 	 * @param serialNumber 
 	 * @throws NegativePriceException 
 	 */
+	
+	public String addNewFigure(String sNumber, String name1, String brand1, String price1, String availableCount1, 
+			String appropriateAge1, String classification1) throws NegativePriceException, MinMaxException {
+		
+		String serialNumber = sNumber;
+		String name = name1;
+		String brand = brand1;
+		
+		double price = Double.parseDouble(price1);
+		int availableCount = Integer.parseInt(availableCount1);
+		int appropriateAge = Integer.parseInt(appropriateAge1);
+		
+		Toys t;
+		String classification = classification1.substring(0, 1);
+		
+		t = new Figures(serialNumber, name, brand, price, availableCount, 
+					appropriateAge, "figure", classification);
+		toyInventory.add(t);
+		save();
+		return t.format();
+			
+	}
+	
+	public String addNewAnimal(String sNumber, String name1, String brand1, String price1, String availableCount1, 
+			String appropriateAge1, String material, String size1) throws NegativePriceException, MinMaxException {
+		
+		String serialNumber = sNumber;
+		String name = name1;
+		String brand = brand1;
+		
+		double price = Double.parseDouble(price1);
+		int availableCount = Integer.parseInt(availableCount1);
+		int appropriateAge = Integer.parseInt(appropriateAge1);
+		
+		Toys t;
+		String size = size1.substring(0, 1);
+		
+		t = new Animals(serialNumber, name, brand, price, availableCount, 
+				appropriateAge, "animal", material, size);
+		toyInventory.add(t);
+		save();
+		return t.format();
+	}
+	
+	public String addNewPuzzle(String sNumber, String name1, String brand1, String price1, String availableCount1, 
+			String appropriateAge1, String puzzleType1) throws NegativePriceException, MinMaxException {
+		
+		String serialNumber = sNumber;
+		String name = name1;
+		String brand = brand1;
+		
+		double price = Double.parseDouble(price1);
+		int availableCount = Integer.parseInt(availableCount1);
+		int appropriateAge = Integer.parseInt(appropriateAge1);
+		
+		Toys t;
+		String puzzleType = puzzleType1.substring(0, 1);
+		
+		t = new Puzzles(serialNumber, name, brand, price, availableCount, 
+				appropriateAge, "puzzle", puzzleType);
+		toyInventory.add(t);
+		save();
+		return t.format();
+	}
+	
+	public String addNewBoardGame(String sNumber, String name1, String brand1, String price1, String availableCount1, 
+			String appropriateAge1, String minPlayers1, String maxPlayers1, String designers) throws NegativePriceException, MinMaxException {
+		
+		String serialNumber = sNumber;
+		String name = name1;
+		String brand = brand1;
+		
+		double price = Double.parseDouble(price1);
+		int availableCount = Integer.parseInt(availableCount1);
+		int appropriateAge = Integer.parseInt(appropriateAge1);
+		
+		Toys t;
+		int minPlayers = Integer.parseInt(minPlayers1);
+		int maxPlayers = Integer.parseInt(maxPlayers1);
+		
+		t = new BoardGames(serialNumber, name, brand, price, availableCount, 
+				appropriateAge, "BoardGame", minPlayers, maxPlayers, designers);
+		toyInventory.add(t);
+		save();
+		return t.format();
+	}
+	
 	public void addNewToy(String sNumber, String name, String brand1, String price1, String availableCount1, String appropriateAge1, String type1) throws NegativePriceException, MinMaxException {
 		boolean flag3 = true;
 		
@@ -410,51 +406,24 @@ public class AppController {
 	 * This method is called from the launchApplication method, it will prompt the user for the serial number of the toy they want to remove
 	 * @param sNumber 
 	 */
-	public void removeToy(String sNumber) {
-		String serialNumber = appMenu.promptSN(sNumber);
+	public boolean removeToy(String sNumber) {
+		String serialNumber = sNumber;
 		boolean toyRemoval = false;
 		Toys t1 = null;
 		for (Toys t : toyInventory) {
 			if (serialNumber.equals(t.getSerialNumber())) {
-					
-				boolean invalidInput = true;
-				char option = appMenu.promptRemoveToy(t);
-
-				while (invalidInput) {
-					invalidInput = false;
-
-					switch (option) {
-
-					case 'y':
-						
 						t1 = t;
 						toyRemoval = true;
-						appMenu.showRemoveToySuccess();
-						appMenu.promptPressEnter();
-						
-						break;
-
-					case 'n':
-
-						break;
-
-					default:
-						invalidInput = true;
-						appMenu.showInvalidChoice();
-						option = appMenu.promptRemoveToyAgain();
 					}
 				}		
-			}	
-		}
-		
-		
+	
 		if (toyRemoval == true) {
 			toyInventory.remove(t1);
+			save();
+			return true;
 		}
-		else {
-			appMenu.showSerialNumberNotFound();
-			removeToy(sNumber);
-		}
+
+		return false;
 	}
 	
 	/**
@@ -685,6 +654,8 @@ public class AppController {
 			fileReader.close();
 		}
 	}
+
+	
 
     
 }
