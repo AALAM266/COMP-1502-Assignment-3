@@ -122,7 +122,7 @@ public class AppController {
 				toyFound = false;
 				for (Toys t : toyInventory) {
 					
-					if (t.getName().contains(name)) {
+					if (t.getName().toLowerCase().contains(name.toLowerCase())) {
 						appMenu.showSearchResultsP2(t, n);
 						toySearchResults.add(t);
 						n += 1;
