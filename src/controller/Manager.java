@@ -157,7 +157,15 @@ public class Manager extends AppController implements Initializable {
 			}
 				
 		}); 
-		
+    	
+    	listViewToyInvRemove.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Toys>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Toys> arg0, Toys arg1, Toys arg2) {
+				currentToy = listViewToyInvRemove.getSelectionModel().getSelectedItem();
+				
+			}
+    	});
 	}
     
     private boolean isValidSerialNumber(String serialNumber) {
@@ -246,8 +254,14 @@ public class Manager extends AppController implements Initializable {
     // not sure if this works, template i guess
     private boolean isValidMaxPlayers(String maxPlayers, String minPlayers) throws MinMaxException {
     	boolean isValid = false;
-        int max = Integer.parseInt(maxPlayers);
-        if (max >= Integer.parseInt(minPlayers) && max >= 0) {
+    	int max;
+        try {
+        	 max = Integer.parseInt(maxPlayers);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        
+		if (max >= Integer.parseInt(minPlayers) && max >= 0) {
         	isValid = true;  	
         }
      
@@ -334,7 +348,7 @@ public class Manager extends AppController implements Initializable {
 				break;
 
 				
-			case "boardgame":
+			case "board game":
 				
 				if (isValidMinPlayers(minnumField.getText()) && isValidMaxPlayers(maxnumField.getText(), minnumField.getText()) && isValidString(designersField.getText())) {
 					
@@ -397,7 +411,7 @@ public class Manager extends AppController implements Initializable {
 			listViewToyInvHome.getItems().removeAll(toyInventory);
 			ApplicationLogger.logInfo("Searched: " + txtFieldNameSearch.getText());
 			if (isValidString(txtFieldNameSearch.getText())) {
-				search(2, txtFieldNameSearch.getText());
+				listViewToyInvHome.getItems().addAll(search(2, txtFieldNameSearch.getText()));
 			}
 			else {
 				lblErrorHome.setText("Invalid Input! Try again.");
@@ -410,7 +424,7 @@ public class Manager extends AppController implements Initializable {
 			listViewToyInvHome.getItems().removeAll(toyInventory);
 			ApplicationLogger.logInfo("Searched: " + txtFieldTypeSearch.getText());
 			if (isValidString(txtFieldTypeSearch.getText())) {
-				search(3, txtFieldTypeSearch.getText());
+				listViewToyInvHome.getItems().addAll(search(3, txtFieldTypeSearch.getText()));
 			}
 			else {
 				lblErrorHome.setText("Invalid Input! Try again.");
@@ -455,6 +469,72 @@ public class Manager extends AppController implements Initializable {
     	txtFieldSNSearch.setDisable(true);
     	txtFieldNameSearch.setDisable(true);
     	txtFieldTypeSearch.setDisable(false);
+    }
+
+    @FXML
+    void tabClosedRemoveHandler(ActionEvent event) {
+    	ApplicationLogger.logInfo("Closed Remove Toy Tab");
+    	listViewToyInvRemove.getItems().removeAll(toyInventory);
+    }
+
+    @FXML
+    void tabClosedAddToyHandler(ActionEvent event) {
+    	ApplicationLogger.logInfo("Closed Add Toy Tab");
+    	listViewToyInvRemove.getItems().addAll(toyInventory);
+    }
+
+    @FXML
+    void tabClosedHomeHandler(ActionEvent event) {
+    	ApplicationLogger.logInfo("Closed Home Tab");
+    	listViewToyInvRemove.getItems().addAll(toyInventory);
+    }
+    
+    @FXML
+    void catergoryDropDownHandler(ActionEvent event) {
+    	
+    	switch (categoryDropDown.getValue().trim().toLowerCase()) {
+		case "figure":
+			figureClassField.setDisable(false);
+			animalMaterialField.setDisable(true);
+			animalSizeField.setDisable(true);
+			puzzleTypeField.setDisable(true);
+			minnumField.setDisable(true);
+			maxnumField.setDisable(true);
+			designersField.setDisable(true);
+			break;
+			
+		case "animal":
+			animalMaterialField.setDisable(false);
+			animalSizeField.setDisable(false);
+			figureClassField.setDisable(true);
+			puzzleTypeField.setDisable(true);
+			minnumField.setDisable(true);
+			maxnumField.setDisable(true);
+			designersField.setDisable(true);
+			break;
+			
+		case "puzzle":
+			puzzleTypeField.setDisable(false);
+			figureClassField.setDisable(true);
+			animalMaterialField.setDisable(true);
+			animalSizeField.setDisable(true);
+			minnumField.setDisable(true);
+			maxnumField.setDisable(true);
+			designersField.setDisable(true);
+			break;
+
+			
+		case "board game":
+			minnumField.setDisable(false);
+			maxnumField.setDisable(false);
+			designersField.setDisable(false);
+			figureClassField.setDisable(true);
+			animalMaterialField.setDisable(true);
+			animalSizeField.setDisable(true);
+			puzzleTypeField.setDisable(true);
+
+			break;
+		}
     }
 
 }
