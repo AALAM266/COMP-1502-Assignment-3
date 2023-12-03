@@ -20,7 +20,7 @@
          <center>
             <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
               <tabs>
-                <Tab fx:id="tabHome" onClosed="#tabClosedHomeHandler" text="Home">
+                <Tab fx:id="tabHome" text="Home">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -67,7 +67,7 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                <Tab fx:id="tabAddToy" onClosed="#tabClosedAddToyHandler" text="Add Toy">
+                <Tab fx:id="tabAddToy" text="Add Toy">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -154,7 +154,7 @@
                            </children></AnchorPane>
                   </content>
                 </Tab>
-                  <Tab fx:id="tabRemove" onClosed="#tabClosedRemoveHandler" text="Remove Toy">
+                  <Tab fx:id="tabRemove" text="Remove Toy">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -173,6 +173,11 @@
                               </Label>
                               <Button fx:id="btnRemove" layoutX="74.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnRemoveHandler" prefHeight="25.0" prefWidth="160.0" text="Remove" />
                               <Label fx:id="lblErrorRemove" alignment="TOP_CENTER" layoutX="45.0" layoutY="375.0" prefHeight="131.0" prefWidth="218.0" textFill="RED" />
+                              <Button fx:id="btnGetResults" layoutX="90.0" layoutY="127.0" mnemonicParsing="false" onAction="#btnGetResultsHandler" text="Get/Refresh Results">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </AnchorPane>
                      </content>
