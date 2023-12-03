@@ -163,6 +163,12 @@ public class Manager extends AppController implements Initializable {
 	}
     
     private boolean isValidSerialNumber(String serialNumber) {
+    	for (Toys t : toyInventory) {
+			if (serialNumber.equals(t.getSerialNumber())) {
+				return false;
+			}
+    	}
+    	
         return serialNumber != null
                && serialNumber.length() == 10
                && serialNumber.chars().allMatch(Character::isDigit);
@@ -202,12 +208,7 @@ public class Manager extends AppController implements Initializable {
 
     // this should validate any string, checks if its empty and/or case insensitivity (name, brand, board game designer, animal material etc..)
     private boolean isValidString(String str) {
-        if (str == null) {
-            return false;
-        }
-
-        str = str.toLowerCase().trim();
-        return !str.isEmpty();
+        return str != null && !str.trim().isEmpty();
     }
 
     // this checks the figure class and makes sure it matches the 3 types of figures
@@ -274,7 +275,11 @@ public class Manager extends AppController implements Initializable {
     @FXML
     void btnBuyHandler(ActionEvent event) {
     	ApplicationLogger.logInfo("Buy Button Clicked");
-    	purchase(currentToy);
+    	
+    	if (currentToy != null) {
+    		purchase(currentToy);
+    	}
+    	
     	if (toyInventory.contains(currentToy)) {
     		listViewToyInvHome.getItems().removeAll();
     		ApplicationLogger.logInfo("Purchased " + currentToy.toString());
@@ -284,6 +289,7 @@ public class Manager extends AppController implements Initializable {
     	else {
     		listViewToyInvHome.getItems().removeAll(currentToy);
     		lblErrorHome.setText("Item Does Not Exist!");
+    		ApplicationLogger.logWarning("Attempted To Purchase Item Not Found");
     	}
     
     }
@@ -296,12 +302,6 @@ public class Manager extends AppController implements Initializable {
 				addtoyPriceField.getText() + " " + addtoyAvailcountField.getText() + " " + addtoyAgeAppField.getText()
 				+ " " + figureClassField.getText() + " " + animalMaterialField.getText() + " " + animalSizeField.getText() + " " + puzzleTypeField.getText()
 				 + " " + minnumField.getText() + " " + maxnumField.getText() + " " + designersField.getText());
-		
-//		try {
-//			
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
 		
     	if (isValidSerialNumber(addtoySnField.getText()) && isValidString(addtoyNameField.getText()) 
     			&& isValidString(addtoyBrandField.getText()) && isValidToyPrice(addtoyPriceField.getText()) 
@@ -363,6 +363,10 @@ public class Manager extends AppController implements Initializable {
     		
     	}
     	
+    	else {
+    		lblErrorAdd.setText("Invalid Input! Try again.");
+    		ApplicationLogger.logWarning("Failed To Add Toy");
+    	}
     	
     }	
     
@@ -371,22 +375,18 @@ public class Manager extends AppController implements Initializable {
     	ApplicationLogger.logInfo("Remove Button Clicked");
     	lblErrorRemove.setText("");
 		ApplicationLogger.logInfo("Searched: " + txtFieldSNRemove.getText());
-    	if (isValidSerialNumber(txtFieldSNRemove.getText())) {
-    		if (removeToy(txtFieldSNRemove.getText())) {
-    			lblErrorRemove.setText("Successfully Removed!");
-    			ApplicationLogger.logInfo("Removed: " + txtFieldSNRemove.getText());
-    			listViewToyInvRemove.getItems().removeAll(toyToRemove);
-    		}
-    		
-    		else {
-    			lblErrorRemove.setText("Serial Number Does Not Exist!");
-    		}
-    	}
-    	
-    	else {
-			lblErrorRemove.setText("Invalid Input! Try again.");
+		
+		if (removeToy(txtFieldSNRemove.getText())) {
+			lblErrorRemove.setText("Successfully Removed!");
+			ApplicationLogger.logInfo("Removed: " + txtFieldSNRemove.getText());
+			listViewToyInvRemove.getItems().removeAll(toyToRemove);
 		}
-    	
+		
+		else {
+			lblErrorRemove.setText("Serial Number Does Not Exist!");
+			ApplicationLogger.logWarning("Attempted To Remove Item Not Found");
+		}
+	
     }
     
     @FXML
@@ -401,6 +401,7 @@ public class Manager extends AppController implements Initializable {
 			}
 			else {
 				lblErrorHome.setText("Invalid Input! Try again.");
+				ApplicationLogger.logWarning("Searched With Invalid Input");
 			}
 				
 		}
@@ -414,6 +415,7 @@ public class Manager extends AppController implements Initializable {
 			}
 			else {
 				lblErrorHome.setText("Invalid Input! Try again.");
+				ApplicationLogger.logWarning("Searched With Invalid Input");
 			}
 	
 		}
@@ -427,6 +429,7 @@ public class Manager extends AppController implements Initializable {
 			}
 			else {
 				lblErrorHome.setText("Invalid Input! Try again.");
+				ApplicationLogger.logWarning("Searched With Invalid Input");
 			}
 			
 		}
@@ -473,13 +476,13 @@ public class Manager extends AppController implements Initializable {
     @FXML
     void btnGetResultsHandler(ActionEvent event) {
     	ApplicationLogger.logInfo("Refresh Button Clicked");
-    	listViewToyInvRemove.getItems().removeAll(toyInventory);
+    	listViewToyInvRemove.getItems().clear(); 
     	listViewToyInvRemove.getItems().addAll(toyInventory);
     }
     
     @FXML
     void catergoryDropDownHandler(ActionEvent event) {
-    	
+    	ApplicationLogger.logInfo("Drop Down Menu Option Clicked");
     	switch (categoryDropDown.getValue().trim().toLowerCase()) {
 		case "figure":
 			figureClassField.setDisable(false);
@@ -489,6 +492,13 @@ public class Manager extends AppController implements Initializable {
 			minnumField.setDisable(true);
 			maxnumField.setDisable(true);
 			designersField.setDisable(true);
+			
+			animalMaterialField.clear(); 
+			animalSizeField.clear(); 
+			puzzleTypeField.clear(); 
+			minnumField.clear(); 
+			maxnumField.clear(); 
+			designersField.clear(); 
 			break;
 			
 		case "animal":
@@ -499,6 +509,12 @@ public class Manager extends AppController implements Initializable {
 			minnumField.setDisable(true);
 			maxnumField.setDisable(true);
 			designersField.setDisable(true);
+			
+			figureClassField.clear(); 
+			puzzleTypeField.clear(); 
+			minnumField.clear(); 
+			maxnumField.clear(); 
+			designersField.clear(); 
 			break;
 			
 		case "puzzle":
@@ -509,6 +525,13 @@ public class Manager extends AppController implements Initializable {
 			minnumField.setDisable(true);
 			maxnumField.setDisable(true);
 			designersField.setDisable(true);
+			
+			figureClassField.clear(); 
+			animalMaterialField.clear(); 
+			animalSizeField.clear(); 
+			minnumField.clear(); 
+			maxnumField.clear(); 
+			designersField.clear(); 
 			break;
 
 			
@@ -521,6 +544,10 @@ public class Manager extends AppController implements Initializable {
 			animalSizeField.setDisable(true);
 			puzzleTypeField.setDisable(true);
 
+			figureClassField.clear(); 
+			animalMaterialField.clear(); 
+			animalSizeField.clear(); 
+			puzzleTypeField.clear(); 
 			break;
 		}
     }
