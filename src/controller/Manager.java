@@ -16,7 +16,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import model.Toys;
@@ -56,6 +55,9 @@ public class Manager extends AppController implements Initializable {
 
     @FXML
     private Button btnClear;
+    
+    @FXML
+    private Button btnGetResults;
 
     @FXML
     private RadioButton btnName;
@@ -121,16 +123,7 @@ public class Manager extends AppController implements Initializable {
     private TextField puzzleTypeField;
 
     @FXML
-    private Tab tabAddToy;
-
-    @FXML
-    private Tab tabHome;
-
-    @FXML
     private TabPane tabPane;
-
-    @FXML
-    private Tab tabRemove;
 
     @FXML
     private TextField txtFieldNameSearch; 
@@ -148,7 +141,8 @@ public class Manager extends AppController implements Initializable {
     
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		categoryDropDown.setItems(FXCollections.observableArrayList("Figure", "Animal", "Puzzle", "Board Game"));
+		categoryDropDown.setItems(FXCollections.observableArrayList("Figure", "Animal", "Puzzle", "BoardGame"));
+		listViewToyInvRemove.getItems().addAll(toyInventory);
     	listViewToyInvHome.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Toys>() {
 
 			@Override
@@ -353,7 +347,7 @@ public class Manager extends AppController implements Initializable {
 				break;
 
 				
-			case "board game":
+			case "boardgame":
 				
 				if (isValidMinPlayers(minnumField.getText()) && isValidMaxPlayers(maxnumField.getText(), minnumField.getText()) && isValidString(designersField.getText())) {
 					
@@ -376,12 +370,12 @@ public class Manager extends AppController implements Initializable {
     void btnRemoveHandler(ActionEvent event) {
     	ApplicationLogger.logInfo("Remove Button Clicked");
     	lblErrorRemove.setText("");
-		listViewToyInvRemove.getItems().removeAll(toyInventory);
 		ApplicationLogger.logInfo("Searched: " + txtFieldSNRemove.getText());
     	if (isValidSerialNumber(txtFieldSNRemove.getText())) {
     		if (removeToy(txtFieldSNRemove.getText())) {
     			lblErrorRemove.setText("Successfully Removed!");
     			ApplicationLogger.logInfo("Removed: " + txtFieldSNRemove.getText());
+    			listViewToyInvRemove.getItems().removeAll(toyToRemove);
     		}
     		
     		else {
@@ -477,20 +471,9 @@ public class Manager extends AppController implements Initializable {
     }
 
     @FXML
-    void tabClosedRemoveHandler(ActionEvent event) {
-    	ApplicationLogger.logInfo("Closed Remove Toy Tab");
+    void btnGetResultsHandler(ActionEvent event) {
+    	ApplicationLogger.logInfo("Refresh Button Clicked");
     	listViewToyInvRemove.getItems().removeAll(toyInventory);
-    }
-
-    @FXML
-    void tabClosedAddToyHandler(ActionEvent event) {
-    	ApplicationLogger.logInfo("Closed Add Toy Tab");
-    	listViewToyInvRemove.getItems().addAll(toyInventory);
-    }
-
-    @FXML
-    void tabClosedHomeHandler(ActionEvent event) {
-    	ApplicationLogger.logInfo("Closed Home Tab");
     	listViewToyInvRemove.getItems().addAll(toyInventory);
     }
     
