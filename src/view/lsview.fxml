@@ -149,6 +149,11 @@
                                     <TextField fx:id="maxnumField" layoutX="856.0" layoutY="355.0" prefHeight="25.0" prefWidth="83.0" />
                                     <TextField fx:id="minnumField" layoutX="856.0" layoutY="314.0" prefHeight="25.0" prefWidth="83.0" />
                                     <Label fx:id="lblErrorAdd" alignment="TOP_CENTER" layoutX="36.0" layoutY="427.0" prefHeight="110.0" prefWidth="218.0" textFill="RED" />
+                                    <Label layoutX="332.0" layoutY="149.0" text="(Action (a), Doll (d), or Historic (h))" />
+                                    <Label layoutX="292.0" layoutY="367.0" prefHeight="21.0" prefWidth="356.0" text="Mechanical (m), Cryptic (c), Logic (l), Trivia (t), or Riddle (r))" />
+                                    <Label layoutX="699.0" layoutY="171.0" text=" (Small (s), Medium (m), or Large (l))" />
+                                    <Label layoutX="670.0" layoutY="436.0" text="Minimum number of players cannot exceed Maximum" />
+                                    <Label layoutX="670.0" layoutY="459.0" text="If there are multiple designers, seperate with a ','" />
                                  </children>
                               </AnchorPane>
                            </children></AnchorPane>

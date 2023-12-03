@@ -32,5 +32,10 @@ public class ApplicationLogger {
     public static void logSevere(String message) {
         logger.severe(message);
     }
-
+    
+    public static void close() {
+        fh.close();
+    }
 }
+
+
