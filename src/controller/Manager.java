@@ -78,7 +78,7 @@ public class Manager extends AppController implements Initializable {
     private RadioButton btnType;
 
     @FXML
-    private ComboBox<String> categoryDropDown;
+	public ComboBox<String> categoryDropDown;
 
     @FXML
     private TextField designersField;
@@ -108,10 +108,10 @@ public class Manager extends AppController implements Initializable {
     private Label lblType;
 
     @FXML
-    private ListView<Toys> listViewToyInvHome;
+	public ListView<Toys> listViewToyInvHome;
 
     @FXML
-    private ListView<Toys> listViewToyInvRemove;
+	public ListView<Toys> listViewToyInvRemove;
 
     @FXML
     private TextField maxnumField;
@@ -162,7 +162,7 @@ public class Manager extends AppController implements Initializable {
     	});
 	}
     
-    private boolean isValidSerialNumber(String serialNumber) {
+    public boolean isValidSerialNumber(String serialNumber) {
     	for (Toys t : toyInventory) {
 			if (serialNumber.equals(t.getSerialNumber())) {
 				return false;
@@ -174,7 +174,7 @@ public class Manager extends AppController implements Initializable {
                && serialNumber.chars().allMatch(Character::isDigit);
     }
     
-    private boolean isValidToyPrice(String price) throws NegativePriceException {
+    public boolean isValidToyPrice(String price) throws NegativePriceException {
     	boolean isValid = false;
     	double priceValue = Double.parseDouble(price);
     	if (priceValue >= 0) {
@@ -188,7 +188,7 @@ public class Manager extends AppController implements Initializable {
 		return isValid;
     }
 
-    private boolean isValidToyAvailabilityCount(String count) {
+    public boolean isValidToyAvailabilityCount(String count) {
         try {
             int countValue = Integer.parseInt(count);
             return countValue >= 0;
@@ -197,7 +197,7 @@ public class Manager extends AppController implements Initializable {
         }
     }
 
-    private boolean isValidToyAgeRating(String age) {
+    public boolean isValidToyAgeRating(String age) {
         try {
             int ageValue = Integer.parseInt(age);
             return ageValue >= 0;
@@ -206,13 +206,13 @@ public class Manager extends AppController implements Initializable {
         }
     }
 
-    // this should validate any string, checks if its empty and/or case insensitivity (name, brand, board game designer, animal material etc..)
-    private boolean isValidString(String str) {
+
+    public boolean isValidString(String str) {
         return str != null && !str.trim().isEmpty();
     }
 
-    // this checks the figure class and makes sure it matches the 3 types of figures
-    private boolean isValidFigureClassification(String classification) {
+  
+    public boolean isValidFigureClassification(String classification) {
         if (classification == null || classification.trim().isEmpty()) {
             return false;
         }
@@ -221,8 +221,8 @@ public class Manager extends AppController implements Initializable {
         		lowerCaseClassification.equals("a") || lowerCaseClassification.equals("d") || lowerCaseClassification.equals("h");
     }
 
-    // same thing but for puzzle type
-    private boolean isValidPuzzleType(String type) {
+
+    public boolean isValidPuzzleType(String type) {
         if (type == null || type.trim().isEmpty()) {
             return false;
         }
@@ -231,8 +231,8 @@ public class Manager extends AppController implements Initializable {
         		lowerCaseType.equals("m") || lowerCaseType.equals("c") || lowerCaseType.equals("l") || lowerCaseType.equals("r");
     }
 
-    // ""
-    private boolean isValidAnimalSize(String animalSize) {
+
+    public boolean isValidAnimalSize(String animalSize) {
         if (animalSize == null || animalSize.trim().isEmpty()) {
             return false;
         }
@@ -241,8 +241,8 @@ public class Manager extends AppController implements Initializable {
                 lowerCase.equals("s") || lowerCase.equals("m") || lowerCase.equals("l");
     }
 
-    // not sure if this works, template i guess
-    private boolean isValidMinPlayers(String minPlayers) {
+
+    public boolean isValidMinPlayers(String minPlayers) {
         try {
             int min = Integer.parseInt(minPlayers);
             return min >= 0;
@@ -251,8 +251,8 @@ public class Manager extends AppController implements Initializable {
         }
     }
 
-    // not sure if this works, template i guess
-    private boolean isValidMaxPlayers(String maxPlayers, String minPlayers) throws MinMaxException {
+ 
+    public boolean isValidMaxPlayers(String maxPlayers, String minPlayers) throws MinMaxException {
     	boolean isValid = false;
     	int max;
         try {
