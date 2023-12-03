@@ -318,6 +318,11 @@ public class Manager extends AppController implements Initializable {
 					ApplicationLogger.logInfo("Added: " + newToy);
 				}
 				
+				else {
+		    		lblErrorAdd.setText("Invalid Input! Try again.");
+		    		ApplicationLogger.logWarning("Failed To Add Toy");
+		    	}
+				
 				break;
 				
 			case "animal":
@@ -330,6 +335,11 @@ public class Manager extends AppController implements Initializable {
 					lblErrorAdd.setText("Successfully Added!");
 					ApplicationLogger.logInfo("Added: " + newToy);
 				}
+				
+				else {
+		    		lblErrorAdd.setText("Invalid Input! Try again.");
+		    		ApplicationLogger.logWarning("Failed To Add Toy");
+		    	}
 				
 				break;
 				
@@ -344,6 +354,11 @@ public class Manager extends AppController implements Initializable {
 					ApplicationLogger.logInfo("Added: " + newToy);
 				}
 				
+				else {
+		    		lblErrorAdd.setText("Invalid Input! Try again.");
+		    		ApplicationLogger.logWarning("Failed To Add Toy");
+		    	}
+				
 				break;
 
 				
@@ -357,6 +372,11 @@ public class Manager extends AppController implements Initializable {
 					lblErrorAdd.setText("Successfully Added!");
 					ApplicationLogger.logInfo("Added: " + newToy);
 				}
+				
+				else {
+		    		lblErrorAdd.setText("Invalid Input! Try again.");
+		    		ApplicationLogger.logWarning("Failed To Add Toy");
+		    	}
 	
 				break;
 			}
@@ -482,9 +502,10 @@ public class Manager extends AppController implements Initializable {
     
     @FXML
     void catergoryDropDownHandler(ActionEvent event) {
-    	ApplicationLogger.logInfo("Drop Down Menu Option Clicked");
+  
     	switch (categoryDropDown.getValue().trim().toLowerCase()) {
 		case "figure":
+			ApplicationLogger.logInfo("Drop Down Menu Switched To " + categoryDropDown.getValue().trim());
 			figureClassField.setDisable(false);
 			animalMaterialField.setDisable(true);
 			animalSizeField.setDisable(true);
@@ -502,6 +523,7 @@ public class Manager extends AppController implements Initializable {
 			break;
 			
 		case "animal":
+			ApplicationLogger.logInfo("Drop Down Menu Switched To " + categoryDropDown.getValue().trim());
 			animalMaterialField.setDisable(false);
 			animalSizeField.setDisable(false);
 			figureClassField.setDisable(true);
@@ -518,6 +540,7 @@ public class Manager extends AppController implements Initializable {
 			break;
 			
 		case "puzzle":
+			ApplicationLogger.logInfo("Drop Down Menu Switched To " + categoryDropDown.getValue().trim());
 			puzzleTypeField.setDisable(false);
 			figureClassField.setDisable(true);
 			animalMaterialField.setDisable(true);
@@ -536,6 +559,7 @@ public class Manager extends AppController implements Initializable {
 
 			
 		case "boardgame":
+			ApplicationLogger.logInfo("Drop Down Menu Switched To " + categoryDropDown.getValue().trim());
 			minnumField.setDisable(false);
 			maxnumField.setDisable(false);
 			designersField.setDisable(false);
