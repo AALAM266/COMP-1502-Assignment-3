@@ -30,6 +30,7 @@ public class AppController {
     private AppMenu appMenu;
     public ArrayList<Toys> toyInventory;
     public ArrayList<Toys> toySearchResults;
+    public Toys toyToRemove;
     
 	/**
 	 * Constructor for the AppController class
@@ -254,7 +255,7 @@ public class AppController {
 		int maxPlayers = Integer.parseInt(maxPlayers1);
 		
 		t = new BoardGames(serialNumber, name, brand, price, availableCount, 
-				appropriateAge, "BoardGame", minPlayers, maxPlayers, designers);
+				appropriateAge, "boardgame", minPlayers, maxPlayers, designers);
 		toyInventory.add(t);
 		save();
 		return t.format();
@@ -392,6 +393,7 @@ public class AppController {
 		for (Toys t : toyInventory) {
 			if (serialNumber.equals(t.getSerialNumber())) {
 						t1 = t;
+						toyToRemove = t;
 						toyRemoval = true;
 					}
 				}		
@@ -590,7 +592,7 @@ public class AppController {
 					}
 				}
 				
-				else if (splittedLine.length == 8) {
+				else if (splittedLine.length == 8 && splittedLine[7].length() == 1) {
 					
 					Toys t = new Animals(splittedLine[0], splittedLine[1].toLowerCase(), 
 							splittedLine[2].toLowerCase(), Double.parseDouble(splittedLine[3]), 
