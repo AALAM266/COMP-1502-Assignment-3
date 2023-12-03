@@ -592,7 +592,7 @@ public class AppController {
 					}
 				}
 				
-				else if (splittedLine.length == 8 && splittedLine[7].length() == 1) {
+				else if (splittedLine.length == 8 && splittedLine[7].length() == 1 && !(splittedLine[6].contains("-"))) {
 					
 					Toys t = new Animals(splittedLine[0], splittedLine[1].toLowerCase(), 
 							splittedLine[2].toLowerCase(), Double.parseDouble(splittedLine[3]), 
