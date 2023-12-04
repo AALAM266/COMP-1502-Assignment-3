@@ -217,17 +217,18 @@ public class Manager extends AppController implements Initializable {
 	 * @throws NegativePriceException incase the price is negative
 	 */
     public boolean isValidToyPrice(String price) throws NegativePriceException {
-    	boolean isValid = false;
-    	double priceValue = Double.parseDouble(price);
-    	if (priceValue >= 0) {
-            	isValid = true;  	
+        double priceValue;
+        try {
+            priceValue = Double.parseDouble(price);
+        } catch (NumberFormatException e) {
+            return false;
         }
-    	
-    	else {
-    		throw new NegativePriceException();  
-    	}
-
-		return isValid;
+        
+        if (priceValue >= 0) {
+            return true;
+        } else {
+            throw new NegativePriceException();
+        }
     }
 
 	/**
@@ -331,25 +332,24 @@ public class Manager extends AppController implements Initializable {
 	 * @throws MinMaxException incase the minimum number of players is larger than the maximum number of players
 	 */
     public boolean isValidMaxPlayers(String maxPlayers, String minPlayers) throws MinMaxException {
-    	boolean isValid = false;
-    	int max;
+        int max, min;
         try {
-        	 max = Integer.parseInt(maxPlayers);
+            max = Integer.parseInt(maxPlayers);
+            min = Integer.parseInt(minPlayers);
         } catch (NumberFormatException e) {
-            return false;
+            return false;  
         }
         
-        try {
-			if (max >= Integer.parseInt(minPlayers) && max >= 0) {
-        	isValid = true;  	
+        if (max < 0) {
+            return false; 
         }
-			
-		} catch (Exception e) {
-			throw new MinMaxException();
-		}
-        
-		return isValid;
+
+        if (max < min) {
+            throw new MinMaxException();
+        }
+        return true;
     }
+    
     
 	/**
 	 * This method handles the buy button in the home screen when the user is searching for a toy they want to purchase
