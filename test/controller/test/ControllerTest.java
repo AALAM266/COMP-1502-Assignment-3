@@ -40,28 +40,24 @@ class ControllerTest {
 	@Test
 	void testLoadData() throws Exception {
 		appcontrollerInstance.loadData();
-		ArrayList<Toys> toyInventory = appcontrollerInstance.toyInventory;
-		assertNotNull(toyInventory);
-		assertFalse(toyInventory.isEmpty());
+		assertNotNull(appcontrollerInstance.toyInventory);
+		assertFalse(appcontrollerInstance.toyInventory.isEmpty());
 
 	}
 	
-	/**
-	 * This test checks how the loadData method handles a non-existent file
-	 */
+	
+	
 	@Test
-	public void testLoadFileDoesNotExist() {
-		appcontrollerInstance.toyInventory.clear(); 
-
-		appcontrollerInstance.fileName = "res/nonExistentFile.txt"; 
-																	
-
-		try {
-			appcontrollerInstance.loadData();
-			assertTrue(appcontrollerInstance.toyInventory.isEmpty());
-		} catch (Exception e) {
-			fail("An unexpected exception was thrown!: " + e.getMessage());
-		}
+	public void testAddAndRemoveItem() throws Exception {
+		
+		int toyInventoryStartingSize = appcontrollerInstance.toyInventory.size();
+		
+		appcontrollerInstance.addNewAnimal("1111111111", "axolotl", "gamescape", "4.20", "6", "9", "metal", "l");
+		assertTrue(appcontrollerInstance.toyInventory.size() == toyInventoryStartingSize + 1);
+		 
+		appcontrollerInstance.removeToy(appcontrollerInstance.toyInventory.get(toyInventoryStartingSize).getSerialNumber());
+		assertTrue(appcontrollerInstance.toyInventory.size() == toyInventoryStartingSize);
+	
 	}
 	
 	/**
@@ -92,4 +88,23 @@ class ControllerTest {
 		}
 		assertTrue(testFile.exists());
 	}
+	
+	/**
+	 * This test checks how the loadData method handles a non-existent file
+	 */
+	@Test
+	public void testLoadFileDoesNotExist() {
+		appcontrollerInstance.toyInventory.clear(); 
+
+		appcontrollerInstance.fileName = "res/nonExistentFile.txt"; 
+																	
+
+		try {
+			appcontrollerInstance.loadData();
+			assertTrue(appcontrollerInstance.toyInventory.isEmpty());
+		} catch (Exception e) {
+			fail("An unexpected exception was thrown!: " + e.getMessage());
+		}
+	}
+	
 }
