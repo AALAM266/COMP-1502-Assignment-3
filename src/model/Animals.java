@@ -7,8 +7,8 @@ package model;
  */
 public class Animals extends Toys {
 
-    private String material;
-    private String size;
+    private String material; // material of the animal toy
+    private String size; // size of the animal toy (Small (s), Medium (m), or Large (l))
     
 	/**
 	 * Constructor for the Animals class

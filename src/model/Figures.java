@@ -7,7 +7,7 @@ package model;
  */
 public class Figures extends Toys {
 
-    private String classification;
+    private String classification; // figure classification (Action (a), Doll (d), or Historic (h))
 	
     /**
 	 * Constructor for the Figures class

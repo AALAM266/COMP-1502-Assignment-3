@@ -7,9 +7,9 @@ package model;
  */
 public class BoardGames extends Toys {
 
-    private int minPlayers;
-    private int maxPlayers;
-    private String designers;
+    private int minPlayers; // minimum number of players the board game can have
+    private int maxPlayers; // maximum number of players the board game can have
+    private String designers; // designer(s) names of the board game
     
 	/**
 	 * Constructor for the BoardGames class

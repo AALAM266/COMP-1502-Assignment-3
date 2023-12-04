@@ -7,7 +7,7 @@ package model;
  */
 public class Puzzles extends Toys {
 
-    private String puzzleType;
+    private String puzzleType; // puzzle type (Mechanical (m), Cryptic (c), Logic (l), Trivia (t), or Riddle (r))
 
 	/**
 	 * Constructor for the Puzzles class

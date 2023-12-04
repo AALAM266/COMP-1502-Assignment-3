@@ -8,13 +8,13 @@ package model;
  */
 public abstract class Toys {
 	
-	private String serialNumber;
-	private String name;
-	private String brand;
-	private double price;
-	private int availabityCount;
-	private int appropriateAge;
-	private String toyType;
+	private String serialNumber; // serial number of the toy (unique, 10 digits)
+	private String name; // name of the toy
+	private String brand; // brand of the toy
+	private double price; // price of the toy
+	private int availabityCount; // how many toys are available in inventory
+	private int appropriateAge; // appropriate age range for the toy
+	private String toyType; // type of toy (Puzzle, Board Game, Figure, or Animal) 
 
 	/**
 	 * Constructor for the Toys class

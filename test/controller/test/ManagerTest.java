@@ -12,12 +12,22 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 
+/**
+ * This JUnit test class is used to test the functionality of the Manager class
+ * 
+ * @authors Akheel Alam Eddin and Keegan Hong
+ * @version 1.0
+ */
 class ManagerTest {
 
-	private static Manager manager;
+	private static Manager manager; // Manager instance used for testing
 
+	/**
+	 * Sets up the testing environment before each test
+	 * Initializes the Manager class
+	 */
 	@BeforeAll
-	static void setUp2() {
+	static void setUp() {
 		try {
 			manager = new Manager();
 		} catch (Exception e) {
@@ -26,8 +36,11 @@ class ManagerTest {
 		}
 	}
 
+	/**
+	 * Sets up the JavaFX environment before each test
+	 */
 	@BeforeAll
-	static void setUp() {
+	static void setUp2() {
 		Platform.startup(() -> {});
 
 		manager.listViewToyInvRemove = new ListView<>();
@@ -37,6 +50,9 @@ class ManagerTest {
 		manager.initialize(null, null);
 	}
 
+	/**
+	 * This tests checks if the isValidSerialNumber method properly validates the serial number
+	 */
 	@Test
 	public void testIsValidSerialNumber() {
 		assertTrue(manager.isValidSerialNumber("1234567890"));
@@ -45,13 +61,22 @@ class ManagerTest {
 		assertFalse(manager.isValidSerialNumber(null));
 	}
 
+	/**
+	 * This tests checks if the isValidToyPrice method properly validates the toy name
+	 *
+	 * @throws NegativePriceException if the price is negative
+	 * @throws NumberFormatException if the price is not a number
+	 */
 	@Test
 	public void testIsValidToyPrice() throws NegativePriceException {
 		assertTrue(manager.isValidToyPrice("10.99"));
 		assertThrows(NegativePriceException.class, () -> manager.isValidToyPrice("-5.00"));
 		assertThrows(NumberFormatException.class, () -> manager.isValidToyPrice("wrong"));
 	}
-
+	
+	/**
+	 * This tests checks if the IsValidToyAvailabilityCount method properly validates the toy availability count
+	 */
 	@Test
 	public void testIsValidToyAvailabilityCount() {
 		assertTrue(manager.isValidToyAvailabilityCount("10"));
@@ -59,6 +84,9 @@ class ManagerTest {
 		assertFalse(manager.isValidToyAvailabilityCount("abc"));
 	}
 
+	/**
+	 * This tests checks if the isValidToyAgeRating method properly validates the toy age rating
+	 */
 	@Test
 	public void testIsValidToyAgeRating() {
 		assertTrue(manager.isValidToyAgeRating("5"));
@@ -66,6 +94,9 @@ class ManagerTest {
 		assertFalse(manager.isValidToyAgeRating("abc"));
 	}
 
+	/**
+	 * This tests checks if the isValidString method properly validates certain user input (name, type, animal material, board game designers, etc.)
+	 */
 	@Test
 	public void testIsValidString() {
 		assertTrue(manager.isValidString("valid"));
@@ -74,24 +105,36 @@ class ManagerTest {
 		assertFalse(manager.isValidString(null));
 	}
 
+	/**
+	 * This tests checks if the isValidFigureClassification method properly validates the figure classification
+	 */
 	@Test
 	public void testIsValidFigureClassification() {
 		assertTrue(manager.isValidFigureClassification("action"));
 		assertFalse(manager.isValidFigureClassification("hero"));
 	}
 
+	/**
+	 * This tests checks if the isValidPuzzleType method properly validates the puzzle type
+	 */
 	@Test
 	public void testIsValidPuzzleType() {
 		assertTrue(manager.isValidPuzzleType("mechanical"));
 		assertFalse(manager.isValidPuzzleType("jigsaw"));
 	}
 
+	/**
+	 * This tests checks if the IsValidAnimalSize method properly validates the animal type
+	 */
 	@Test
 	public void testIsValidAnimalSize() {
 		assertTrue(manager.isValidAnimalSize("small"));
 		assertFalse(manager.isValidAnimalSize("huge"));
 	}
 
+	/**
+	 * This tests checks if the isValidMinPlayers method properly validates the minimum number of players
+	 */
 	@Test
 	public void testIsValidMinPlayers() {
 		assertTrue(manager.isValidMinPlayers("1"));
@@ -99,6 +142,11 @@ class ManagerTest {
 		assertFalse(manager.isValidMinPlayers("abc"));
 	}
 
+	/**
+	 * This tests checks if the isValidMaxPlayers method properly validates the maximum number of players
+	 * 
+	 * @throws MinMaxException if the minimum number of players is greater than the maximum number of players
+	 */
 	@Test
 	public void testIsValidMaxPlayers() throws MinMaxException {
 		assertTrue(manager.isValidMaxPlayers("4", "2"));
@@ -107,6 +155,9 @@ class ManagerTest {
 		assertFalse(manager.isValidMaxPlayers("abc", "2"));
 	}
 
+	/**
+	 * This test checks if the initialize method properly initializes the JavaFX components
+	 */
 	@Test
 	void testInitialize() {
 		

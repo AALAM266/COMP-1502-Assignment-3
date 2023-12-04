@@ -1,12 +1,14 @@
 package exceptions;
 
 /**
- * @exception MixMaxException Class to catch when the minimum number of players is greater than the maximum
+ * This class is used to catch when the minimum number of players is greater than the maximum
+ * 
+ * @extends Exception to handle the exception
  */
 public class MinMaxException extends Exception {
 	
 	/**
-	 * Constructor
+	 * This exception is thrown when the minimum number of players is greater than the maximum
 	 */
 	public MinMaxException() {
 		super("Error: Minimum Players Cannot Be Greater Than The Maximum! Try Again.");

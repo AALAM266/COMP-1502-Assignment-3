@@ -11,9 +11,15 @@ import org.junit.jupiter.api.Test;
 
 import controller.AppController;
 
+/**
+ * This JUnit test class is used to test the functionality of the AppController class
+ * 
+ * @authors Akheel Alam Eddin and Keegan Hong
+ * @version 1.0
+ */
 class ControllerTest {
 
-	private AppController appcontrollerInstance;
+	private AppController appcontrollerInstance; // AppController instance used for testing
 	
 	/**
 	 * Sets up the testing environment before each test
