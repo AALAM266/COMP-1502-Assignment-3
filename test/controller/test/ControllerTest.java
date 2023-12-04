@@ -30,7 +30,7 @@ class ControllerTest {
 			e.printStackTrace();
 			fail("Exception was thrown: " + e.getMessage());
 		}
-		appcontrollerInstance.FILENAME = "res/toysTEST.txt";
+		appcontrollerInstance.fileName = "res/toysTEST.txt";
 	}
 	
 	/**
@@ -53,7 +53,7 @@ class ControllerTest {
 	public void testLoadFileDoesNotExist() {
 		appcontrollerInstance.toyInventory.clear(); 
 
-		appcontrollerInstance.FILENAME = "res/nonExistentFile.txt"; 
+		appcontrollerInstance.fileName = "res/nonExistentFile.txt"; 
 																	
 
 		try {
@@ -81,7 +81,7 @@ class ControllerTest {
 	 */
 	@Test
 	void testSaveFileCreation() {
-		File testFile = new File(appcontrollerInstance.FILENAME);
+		File testFile = new File(appcontrollerInstance.fileName);
 		if (testFile.exists()) {
 			assertTrue(testFile.delete());
 		}

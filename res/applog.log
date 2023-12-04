@@ -1,0 +1,12 @@
+Dec 03, 2023 7:16:57 PM controller.ApplicationLogger logInfo
+INFO: Type Button Clicked
+Dec 03, 2023 7:17:00 PM controller.ApplicationLogger logInfo
+INFO: Search Button Clicked
+Dec 03, 2023 7:17:00 PM controller.ApplicationLogger logInfo
+INFO: Searched: boardgame
+Dec 03, 2023 7:17:16 PM controller.ApplicationLogger logInfo
+INFO: Name Button Clicked
+Dec 03, 2023 7:17:19 PM controller.ApplicationLogger logInfo
+INFO: Search Button Clicked
+Dec 03, 2023 7:17:19 PM controller.ApplicationLogger logInfo
+INFO: Searched: strange
