@@ -23,9 +23,9 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("../view/ToyStoreApp.fxml"));
+			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("/view/ToyStoreApp.fxml"));
 			Scene scene = new Scene(root,1000,600);
-			scene.getStylesheets().add(getClass().getResource("../view/application.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("/view/application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
