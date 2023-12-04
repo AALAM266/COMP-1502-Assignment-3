@@ -5,8 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-import exceptions.MinMaxException;
-import exceptions.NegativePriceException;
 import model.Animals;
 import model.BoardGames;
 import model.Figures;
@@ -119,11 +117,9 @@ public class AppController {
 	 * @param appropriateAge1 appropriate age rating of the toy
 	 * @param classification1 classification of the figure (Action (a), Doll (d), or Historic (h)
 	 * @return the figure that the user added
-	 * @throws NegativePriceException if the user enters a negative number for the price 
-	 * @throws MinMaxException if the user enters a minimum player count that is larger than the maximum player count
 	 */
 	public String addNewFigure(String sNumber, String name1, String brand1, String price1, String availableCount1, 
-			String appropriateAge1, String classification1) throws NegativePriceException, MinMaxException {
+			String appropriateAge1, String classification1) {
 		
 		String serialNumber = sNumber;
 		String name = name1;
@@ -155,11 +151,9 @@ public class AppController {
 	 * @param material material of the toy
 	 * @param size1 size of the toy (Small(s), Medium(m), Large(l))
 	 * @return the animal that the user added
-	 * @throws NegativePriceException if the user enters a negative number for the price
-	 * @throws MinMaxException if the user enters a minimum player count that is larger than the maximum player count
 	 */
 	public String addNewAnimal(String sNumber, String name1, String brand1, String price1, String availableCount1, 
-			String appropriateAge1, String material, String size1) throws NegativePriceException, MinMaxException {
+			String appropriateAge1, String material, String size1) {
 		
 		String serialNumber = sNumber;
 		String name = name1;
@@ -189,11 +183,9 @@ public class AppController {
 	 * @param appropriateAge1 appropriate age rating of the toy
 	 * @param puzzleType1 type of puzzle (Mechanical (m), Cryptic (c), Logic (l), Trivia (t), or Riddle (r))
 	 * @return the puzzle that the user added
-	 * @throws NegativePriceException if the user enters a negative number for the price
-	 * @throws MinMaxException if the user enters a minimum player count that is larger than the maximum player count
 	 */
 	public String addNewPuzzle(String sNumber, String name1, String brand1, String price1, String availableCount1, 
-			String appropriateAge1, String puzzleType1) throws NegativePriceException, MinMaxException {
+			String appropriateAge1, String puzzleType1) {
 		
 		String serialNumber = sNumber;
 		String name = name1;
@@ -225,11 +217,9 @@ public class AppController {
 	 * @param maxPlayers1 maximum player count of the board game
 	 * @param designers designers of the board game (separated by commas if more than 1)
 	 * @return the board game that the user added
-	 * @throws NegativePriceException if the user enters a negative number for the price
-	 * @throws MinMaxException if the user enters a minimum player count that is larger than the maximum player count
 	 */
 	public String addNewBoardGame(String sNumber, String name1, String brand1, String price1, String availableCount1, 
-			String appropriateAge1, String minPlayers1, String maxPlayers1, String designers) throws NegativePriceException, MinMaxException {
+			String appropriateAge1, String minPlayers1, String maxPlayers1, String designers) {
 		
 		String serialNumber = sNumber;
 		String name = name1;
