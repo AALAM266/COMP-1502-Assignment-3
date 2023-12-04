@@ -1,7 +1,6 @@
 package controller.test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import controller.Manager;
@@ -27,7 +26,7 @@ class ManagerTest {
     @Test
     void testLoadFXML() {
         assertDoesNotThrow(() -> {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/lsview.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("view/lsview.fxml"));
             assertNotNull(root);
         });
     }

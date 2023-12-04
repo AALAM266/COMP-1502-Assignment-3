@@ -26,7 +26,7 @@ import view.AppMenu;
  */
 public class AppController {
 
-    private final String FILENAME = "res/toys.txt";
+    public String FILENAME = "res/toys.txt";
     private AppMenu appMenu;
     public ArrayList<Toys> toyInventory;
     public ArrayList<Toys> toySearchResults;
@@ -557,7 +557,7 @@ public class AppController {
 	 * txt resource file into the arraylist to be used as the inventory for the application
 	 * @throws Exception
 	 */
-	private void loadData() throws Exception { 
+	public void loadData() throws Exception { 
 		File toyInventoryInfo = new File(FILENAME);
 		String currentLine;
 		String[] splittedLine;
