@@ -6,10 +6,13 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import controller.AppController;
+import model.Toys;
 
 class ControllerTest {
 
@@ -42,13 +45,11 @@ class ControllerTest {
 
 	}
 	
-	
 	/**
 	 * This test covers the functionality of the adding and removing item methods
-	 * @throws Exception if an error happens during the add or remove
 	 */
 	@Test
-	public void testAddAndRemoveItem() throws Exception {
+	public void testAddAndRemoveItem() {
 		
 		int toyInventoryStartingSize = appcontrollerInstance.toyInventory.size();
 		
@@ -58,6 +59,18 @@ class ControllerTest {
 		appcontrollerInstance.removeToy(appcontrollerInstance.toyInventory.get(toyInventoryStartingSize).getSerialNumber());
 		assertTrue(appcontrollerInstance.toyInventory.size() == toyInventoryStartingSize);
 	
+	}
+		
+	/**
+	 * This test covers the functionality of the search method
+	 */
+	@Test
+	public void testSearchItem() {
+		
+		appcontrollerInstance.addNewAnimal("1111111111", "axolotl", "gamescape", "4.20", "6", "9", "metal", "l");
+		ArrayList<Toys> searchedToy = appcontrollerInstance.search(1, "1111111111");
+		assertEquals(appcontrollerInstance.toySearchResults.get(0), searchedToy.get(0)); ;
+		
 	}
 	
 	/**
