@@ -163,10 +163,12 @@ public class Manager extends AppController implements Initializable {
 	}
     
     public boolean isValidSerialNumber(String serialNumber) {
-    	for (Toys t : toyInventory) {
-			if (serialNumber.equals(t.getSerialNumber())) {
+    	if (serialNumber != null) {
+    		for (Toys t : toyInventory) {
+    			if (serialNumber.equals(t.getSerialNumber())) {
 				return false;
-			}
+    			}
+    		}
     	}
     	
         return serialNumber != null
@@ -261,14 +263,15 @@ public class Manager extends AppController implements Initializable {
             return false;
         }
         
-		if (max >= Integer.parseInt(minPlayers) && max >= 0) {
+        try {
+			if (max >= Integer.parseInt(minPlayers) && max >= 0) {
         	isValid = true;  	
         }
-     
-    	else {
-    		throw new MinMaxException();  
-    	}
-
+			
+		} catch (Exception e) {
+			throw new MinMaxException();
+		}
+        
 		return isValid;
     }
     
