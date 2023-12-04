@@ -2,8 +2,6 @@ package controller.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import controller.Manager;
@@ -11,14 +9,8 @@ import exceptions.MinMaxException;
 import exceptions.NegativePriceException;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
-import model.Animals;
-import model.BoardGames;
-import model.Figures;
-import model.Puzzles;
-import model.Toys;
 
 class ManagerTest {
 
@@ -37,16 +29,6 @@ class ManagerTest {
 	@BeforeAll
 	static void setUp() {
 		Platform.startup(() -> {});
-
-		ObservableList<Toys> testToys = FXCollections.observableArrayList(
-				new BoardGames("9870097486", "castle risk", "game sky", 64.1, 10, 2, "Board Game", 2, 4,
-						"milla baxter,harpreet reilly"),
-				new Animals("2296386544", "chimpanzee", "gamefluent", 12.89, 12, 10, "Animal", "fabric", "l"),
-				new Figures("1024162826", "japanese traditional dolls", "game demon", 139.99, 12, 7, "Figure", "h"),
-				new Puzzles("5726898779", "pocket cube", "game orc", 42.83, 1, 4, "Puzzle", "m")
-				);
-
-		manager.toyInventory = new ArrayList<>(testToys);
 
 		manager.listViewToyInvRemove = new ListView<>();
 		manager.listViewToyInvHome = new ListView<>();
@@ -128,7 +110,6 @@ class ManagerTest {
 	@Test
 	void testInitialize() {
 		
-
 		assertNotNull(manager.listViewToyInvRemove.getItems());
 		assertFalse(manager.listViewToyInvRemove.getItems().isEmpty());
 		assertNotNull(manager.listViewToyInvHome.getItems());
