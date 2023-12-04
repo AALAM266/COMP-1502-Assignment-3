@@ -12,22 +12,19 @@ import model.BoardGames;
 import model.Figures;
 import model.Puzzles;
 import model.Toys;
-import view.AppMenu;
 
 /**
- * The AppController class is responsible for managing the application, it interacts with the user through the AppMenu.
- * It contains methods to add new toys, search for specific toys, remove toys, and a gift suggestion.
- * The main entry point of the application is the launchApplication() method, which
- * displays the main menu to the user and calls the appropriate methods based on the
- * user's choice.
+ * The AppController class is responsible for managing the application, it interacts with the user through the Manager Class.
+ * It contains methods to add new toys, search for specific toys, remove toys, and save.
+ * The main entry point of the application is from the Manager Class super() method, which causes this constructor to be called,
+ * loading the data from the file.
  * 
  * @author Akheel Alam Eddin and Keegan Hong
  * @version 1.0
  */
 public class AppController {
 
-    public String FILENAME = "res/toys.txt";
-    private AppMenu appMenu;
+    public String fileName = "res/toys.txt";
     public ArrayList<Toys> toyInventory;
     public ArrayList<Toys> toySearchResults;
     public Toys toyToRemove;
@@ -38,64 +35,14 @@ public class AppController {
 	 */
     public AppController() throws Exception {
     	toyInventory = new ArrayList<>();
-    	appMenu = new AppMenu();
     	
     	loadData();
-    	
-    	//launchApplication();
+
     }
     
-    /**
-	 * This method is called from the constructor and will show the main menu to the
-	 * user and then call the appropriate method based on the user's choice
-	 * 
-	 * @throws Exception
-	 */
-//	public void launchApplication() throws Exception { 
-//		boolean flag = true;
-//		int option;
-//		appMenu.showWelcomeMsg();
-//
-//		while (flag) {
-//			appMenu.showMainMenu();
-//			option = appMenu.enterOption();
-//
-//			switch (option) {
-//
-//			case 1:
-//				searchAndPurchase();
-//				break;
-//			case 2:
-//				addNewToy();
-//				break;
-//			case 3:
-//				removeToy();
-//				break;
-//			case 4:
-//				makeGiftSuggestion();
-//				break;
-//			case 5:
-//				save();
-//				flag = false;
-//				break;
-//			default:
-//				appMenu.showInvalidChoice();
-//			}
-//		}
-//
-//	}
-
-	/**
-	 * This method is called from the launchApplication method, it will search for toys based on the user input and allow the user to purchase them
-	 * @param sNumber 
-	 * @return 
-	 */
 	public ArrayList<Toys> search(int option, String specifier) {
 
-			boolean flag2 = true;
 			toySearchResults = new ArrayList<>();
-			int n = 1;
-			int choice = -1;
 			Toys t1 = null;
 			
 			switch (option) {
@@ -103,14 +50,11 @@ public class AppController {
 			case 1:
 				String serialNumber = specifier;
 				
-				boolean toyFound = false;
 				for (Toys t : toyInventory) {
 					
 					if (serialNumber.equalsIgnoreCase(t.getSerialNumber())) {
 						toySearchResults.add(t);
-						n += 1;
 						t1 = t;
-						toyFound = true;
 					}				
 				}
 				
@@ -119,15 +63,11 @@ public class AppController {
 			case 2:
 				String name = specifier;
 				
-				toyFound = false;
 				for (Toys t : toyInventory) {
 					
 					if (t.getName().toLowerCase().contains(name.toLowerCase())) {
-						appMenu.showSearchResultsP2(t, n);
 						toySearchResults.add(t);
-						n += 1;
 						t1 = t;
-						toyFound = true;
 					}
 					
 				}
@@ -139,11 +79,8 @@ public class AppController {
 				for (Toys t : toyInventory) {
 					
 					if (type.equalsIgnoreCase(t.getToyType())) {
-						appMenu.showSearchResultsP2(t, n);
 						toySearchResults.add(t);
 						t1 = t;
-						n += 1;
-						toyFound = true;
 					}
 				}
 		
@@ -162,19 +99,7 @@ public class AppController {
 		save();
 	}
 
-	/**
-	 * This method is called from the launchApplication method, it will prompt the user for all of the toy's attributes then it
-	 * will add it to the arraylist that will eventually get stored in the txt file
-	 * @param string7 
-	 * @param string6 
-	 * @param string5 
-	 * @param string4 
-	 * @param string3 
-	 * @param string2 
-	 * @param serialNumber 
-	 * @throws NegativePriceException 
-	 */
-	
+
 	public String addNewFigure(String sNumber, String name1, String brand1, String price1, String availableCount1, 
 			String appropriateAge1, String classification1) throws NegativePriceException, MinMaxException {
 		
@@ -261,129 +186,8 @@ public class AppController {
 		return t.format();
 	}
 	
-	public void addNewToy(String sNumber, String name, String brand1, String price1, String availableCount1, String appropriateAge1, String type1) throws NegativePriceException, MinMaxException {
-		boolean flag3 = true;
-		
-		String serialNumber = appMenu.promptSN(toyInventory, sNumber);
-		String name1 = appMenu.promptToyName();
-		String brand = appMenu.promptBrand();
-		
-		double price = appMenu.promptToyPrice();
-		int availableCount = appMenu.promptAvailableCount();
-		int appropriateAge = appMenu.promptAgeAppropriate();
-		
-		while (flag3) {
-			Toys t;
-			switch (appMenu.promptType()) {
-			case "boardgame":
-				
-				int minPlayers = appMenu.promptMinPlayers();
-				int maxPlayers = appMenu.promptMaxPlayers();
-				while (minPlayers > maxPlayers) {
-					try {
-						throw new MinMaxException();
-					} catch (Exception e) {
-						e.printStackTrace();
-						System.out.println();
-					}
-					
-					minPlayers = appMenu.promptMinPlayers();
-					maxPlayers = appMenu.promptMaxPlayers();
-				break;
-				}
-				
-				String designers = appMenu.promptDesigners();
-				
-				t = new BoardGames(serialNumber, name1, brand, price, availableCount, 
-						appropriateAge, "BoardGame", minPlayers, maxPlayers, designers);
-				toyInventory.add(t);
-				flag3 = false;
-				break;
-				
-			case "figure":
-				boolean flag = true;
-				String classification = null;
-				while (flag ) {
-					classification = appMenu.promptClassification();
-					switch (classification) {
-					case "a":
-					case "d":
-					case "h":
-						flag = false;
-						break;
-						
-					default:
-						appMenu.showInvalidChoice();
-					}
-				}
-				
-				t = new Figures(serialNumber, name1, brand, price, availableCount, 
-						appropriateAge, "figure", classification);
-				toyInventory.add(t);
-				
-				flag3 = false;
-				break;
-				
-			case "animal":
-				boolean flag1 = true;
-				String material = appMenu.promptMaterial();
-				String size = null;
-				while (flag1) {				
-					size = appMenu.promptSize();
-					switch (size) {
-					case "s":
-					case "m":
-					case "l":
-						flag1 = false;
-						break;
-						
-					default:
-						appMenu.showInvalidChoice();
-					}
-				}
-				t = new Animals(serialNumber, name1, brand, price, availableCount, 
-						appropriateAge, "animal", material, size);
-				toyInventory.add(t);
-				
-				flag3 = false;
-				break;
-				
-			case "puzzle":
-				boolean flag2 = true;
-				String puzzleType = null;
-				while (flag2) {		
-					puzzleType = appMenu.promptPuzzleType();
-					switch (puzzleType) {
-					case "m":
-					case "c":
-					case "l":
-					case "t":
-					case "r":
-						flag2 = false;
-						break;
-						
-					default:
-						appMenu.showInvalidChoice();
-					}
-				}
-				t = new Puzzles(serialNumber, name1, brand, price, availableCount, 
-						appropriateAge, "puzzle", puzzleType);
-				toyInventory.add(t);
-				
-				flag3 = false;
-				break;
-			default:
-				appMenu.showInvalidChoice();
-			}
-		}
-
-		appMenu.showAddNewToySuccess();
-		appMenu.promptPressEnter();
-		
-	}
-	
 	/**
-	 * This method is called from the launchApplication method, it will prompt the user for the serial number of the toy they want to remove
+	 * This method is called from the Manager btnRemoveHandler method, it will remove the toy they want using the serial number provided
 	 * @param sNumber 
 	 */
 	public boolean removeToy(String sNumber) {
@@ -407,123 +211,14 @@ public class AppController {
 		return false;
 	}
 	
-	/**
-	 * This method is called from the launchApplication method, it will prompt the user for either the age rating of the toy, or the type, or the price range
-	 * The information will then be used to recommend a gift for the user to buy
-	 */
-	public void makeGiftSuggestion() {
-		final double MAX_PRICE = 1000000;
-		int giftCounter = 0;
-		int n = 1;
-		int choice = -1;
-		String type = null;
-		int appropriateAge = appMenu.promptGiftAgeAppropriate();
-		if (appropriateAge != -1) {
-			giftCounter += 1;
-		}
-		boolean flag1 = true;
-		boolean flag2 = true;
-		while (flag1) {		
-			type = appMenu.promptGiftType();
-			switch (type) {
-			case "boardgame":
-			case "animal":
-			case "figure":
-			case "puzzle":
-				giftCounter += 1;
-				flag1 = false;
-				break;
-			
-			case "":
-				flag1 = false;
-				break;
-
-			default:
-				
-				appMenu.showInvalidChoice();
-			}
-		}
-
-		Double price = appMenu.promptToyPriceMin();
-		Double price2 = appMenu.promptToyPriceMax(price);
-		while(price > price2 && price2 != -1) {
-			appMenu.showGiftPriceError();
-			price = appMenu.promptToyPriceMin();
-			price2 = appMenu.promptToyPriceMax(price);
-		}
-		
-		if (price > price2 && price2 == -1) {
-			price2 = MAX_PRICE;
-		}
-		
-		if (price != -1 || price2 != -1) {
-			giftCounter += 1;
-		}
-		
-		if (giftCounter == 0) {
-			appMenu.showRetryGiftSuggestion();
-			makeGiftSuggestion();
-		}
-		
-		appMenu.showSearchResultsP1(toyInventory);
-		ArrayList<Toys> toySearchResults = new ArrayList<>();
-		appMenu.showSearchResultsP1(toyInventory);
-		Toys t1 = null;
-		for (Toys t : toyInventory) {
-			
-			if (type.equalsIgnoreCase(t.getToyType())) {
-				appMenu.showSearchResultsP2(t, n);
-				toySearchResults.add(t);
-				t1 = t;
-				n += 1;
-			}
-			
-			if (t.getAppropriateAge() >= appropriateAge && appropriateAge != -1) {
-				appMenu.showSearchResultsP2(t, n);
-				toySearchResults.add(t);
-				t1 = t;
-				n += 1;
-			}
-			
-			if (t.getPrice() >= price && t.getPrice() <= price2) {
-				appMenu.showSearchResultsP2(t, n);
-				toySearchResults.add(t);
-				t1 = t;
-				n += 1;
-			}
-		}	
-
-		while (flag2) {
-			choice = appMenu.showSearchResultsP3(n);
-			
-			if (choice == n) {
-				flag2 = false;
-				break;
-			}
-			
-			else if (choice > n || choice < 1) {
-				appMenu.showInvalidChoice();
-			}
-			
-			else {
-				toySearchResults.remove(choice - 1);
-				
-				t1.decreaseAvailableCount();
-				toyInventory.remove(choice);
-				appMenu.showTransactionSuccess();
-				appMenu.promptPressEnter();
-			}
-			
-		}
-	}
 
 	/**
-	 * This method is called from the launchApplication method, it will save the
+	 * This method is called from the purchase, addNewFigure, addNewAnimal, addNewPuzzle, addNewBoardGame, and removeToy methods, it will save the
 	 * data into the txt file when the program is shut down
 	 * @throws Exception
 	 */
-	public void save() { // Save data into the txt file when the user chooses the save and exit option
-		try(FileWriter fw = new FileWriter(FILENAME, false)) {
+	public void save() { // Save data into the txt file when the user changes the inventory
+		try(FileWriter fw = new FileWriter(fileName, false)) {
 
 			for (Toys t : toyInventory) {
 				
@@ -544,11 +239,11 @@ public class AppController {
 					fw.write(p.format());
 				}
 			}	
-	//	appMenu.showSavingMsg();
-	} catch (IOException e) {
+
+		} catch (IOException e) {
 		e.printStackTrace();
 		
-	}
+		}
 
 	}
 	
@@ -558,7 +253,7 @@ public class AppController {
 	 * @throws Exception
 	 */
 	public void loadData() throws Exception { 
-		File toyInventoryInfo = new File(FILENAME);
+		File toyInventoryInfo = new File(fileName);
 		String currentLine;
 		String[] splittedLine;
 
