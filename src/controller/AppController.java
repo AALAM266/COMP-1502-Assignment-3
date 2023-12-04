@@ -15,7 +15,7 @@ import model.Toys;
 
 /**
  * The AppController class is responsible for managing the application, it interacts with the user through the Manager Class.
- * It contains methods to add new toys, search for specific toys, remove toys, and save.
+ * It contains methods to add new toys, search for specific toys, remove toys, and saving.
  * The main entry point of the application is from the Manager Class super() method, which causes this constructor to be called,
  * loading the data from the file.
  * 
@@ -24,14 +24,14 @@ import model.Toys;
  */
 public class AppController {
 
-    public String fileName = "res/toys.txt";
-    public ArrayList<Toys> toyInventory;
-    public ArrayList<Toys> toySearchResults;
-    public Toys toyToRemove;
+    public String fileName = "res/toys.txt"; // File name of the txt file
+    public ArrayList<Toys> toyInventory; // Arraylist of toys
+    public ArrayList<Toys> toySearchResults; // Arraylist of toys that match the search criteria
+    public Toys toyToRemove; // Toy to be removed
     
 	/**
 	 * Constructor for the AppController class
-	 * @throws Exception 
+	 * @throws Exception in case of an error
 	 */
     public AppController() throws Exception {
     	toyInventory = new ArrayList<>();
@@ -40,6 +40,12 @@ public class AppController {
 
     }
     
+	/**
+	 * This method is called from the Manager btnSearchHandler method, it will search for the toy they want using the option and specifier provided
+	 * @param option 
+	 * @param specifier
+	 * @return the requested search results 
+	 */
 	public ArrayList<Toys> search(int option, String specifier) {
 
 			toySearchResults = new ArrayList<>();
@@ -91,6 +97,10 @@ public class AppController {
 	
 	}
 	
+	/**
+	 * This method is called from the Manager btnBuyHandler method, it will purchase the requested toy and subtract the available count by 1
+	 * @param currentToy the toy to be purchased
+	 */
 	public void purchase(Toys currentToy) {
 		currentToy.decreaseAvailableCount();
 		if (currentToy.getAvailabityCount() == 0) {
@@ -99,7 +109,19 @@ public class AppController {
 		save();
 	}
 
-
+	/**
+	 * This method will add a new toy the user wants using the information provided (only if the user wants to add a figure)
+	 * @param sNumber serial number of the toy
+	 * @param name1 name of the toy
+	 * @param brand1 brand of the toy
+	 * @param price1 price of the toy
+	 * @param availableCount1 available count of the toy
+	 * @param appropriateAge1 appropriate age rating of the toy
+	 * @param classification1 classification of the figure (Action (a), Doll (d), or Historic (h)
+	 * @return the figure that the user added
+	 * @throws NegativePriceException if the user enters a negative number for the price 
+	 * @throws MinMaxException if the user enters a minimum player count that is larger than the maximum player count
+	 */
 	public String addNewFigure(String sNumber, String name1, String brand1, String price1, String availableCount1, 
 			String appropriateAge1, String classification1) throws NegativePriceException, MinMaxException {
 		
@@ -122,6 +144,20 @@ public class AppController {
 			
 	}
 	
+	/**
+	 * This method will add a new toy the user wants using the information provided (only if the user wants to add an animal)
+	 * @param sNumber serial number of the toy
+	 * @param name1 name of the toy
+	 * @param brand1 brand of the toy
+	 * @param price1 price of the toy 
+	 * @param availableCount1 available count of the toy
+	 * @param appropriateAge1 appropriate age rating of the toy 
+	 * @param material material of the toy
+	 * @param size1 size of the toy (Small(s), Medium(m), Large(l))
+	 * @return the animal that the user added
+	 * @throws NegativePriceException if the user enters a negative number for the price
+	 * @throws MinMaxException if the user enters a minimum player count that is larger than the maximum player count
+	 */
 	public String addNewAnimal(String sNumber, String name1, String brand1, String price1, String availableCount1, 
 			String appropriateAge1, String material, String size1) throws NegativePriceException, MinMaxException {
 		
@@ -143,6 +179,19 @@ public class AppController {
 		return t.format();
 	}
 	
+	/**
+	 * This method will add a new toy the user wants using the information provided (only if the user wants to add a puzzle)
+	 * @param sNumber serial number of the toy
+	 * @param name1 name of the toy
+	 * @param brand1 brand of the toy
+	 * @param price1 price of the toy
+	 * @param availableCount1 available count of the toy
+	 * @param appropriateAge1 appropriate age rating of the toy
+	 * @param puzzleType1 type of puzzle (Mechanical (m), Cryptic (c), Logic (l), Trivia (t), or Riddle (r))
+	 * @return the puzzle that the user added
+	 * @throws NegativePriceException if the user enters a negative number for the price
+	 * @throws MinMaxException if the user enters a minimum player count that is larger than the maximum player count
+	 */
 	public String addNewPuzzle(String sNumber, String name1, String brand1, String price1, String availableCount1, 
 			String appropriateAge1, String puzzleType1) throws NegativePriceException, MinMaxException {
 		
@@ -164,6 +213,21 @@ public class AppController {
 		return t.format();
 	}
 	
+	/**
+	 * This method will add a new toy the user wants using the information provided (only if the user wants to add a board game)
+	 * @param sNumber serial number of the toy
+	 * @param name1 name of the toy
+	 * @param brand1 brand of the toy
+	 * @param price1 price of the toy
+	 * @param availableCount1 available count of the toy
+	 * @param appropriateAge1 appropriate age rating of the toy
+	 * @param minPlayers1 minimum player count of the board game
+	 * @param maxPlayers1 maximum player count of the board game
+	 * @param designers designers of the board game (separated by commas if more than 1)
+	 * @return the board game that the user added
+	 * @throws NegativePriceException if the user enters a negative number for the price
+	 * @throws MinMaxException if the user enters a minimum player count that is larger than the maximum player count
+	 */
 	public String addNewBoardGame(String sNumber, String name1, String brand1, String price1, String availableCount1, 
 			String appropriateAge1, String minPlayers1, String maxPlayers1, String designers) throws NegativePriceException, MinMaxException {
 		
@@ -187,8 +251,8 @@ public class AppController {
 	}
 	
 	/**
-	 * This method is called from the Manager btnRemoveHandler method, it will remove the toy they want using the serial number provided
-	 * @param sNumber 
+	 * This method will remove the toy the user wants by using the serial number they provided
+	 * @param sNumber serial number of the toy
 	 */
 	public boolean removeToy(String sNumber) {
 		String serialNumber = sNumber;
@@ -215,7 +279,7 @@ public class AppController {
 	/**
 	 * This method is called from the purchase, addNewFigure, addNewAnimal, addNewPuzzle, addNewBoardGame, and removeToy methods, it will save the
 	 * data into the txt file when the program is shut down
-	 * @throws Exception
+	 * @throws Exception in case of an error
 	 */
 	public void save() { // Save data into the txt file when the user changes the inventory
 		try(FileWriter fw = new FileWriter(fileName, false)) {
@@ -250,7 +314,7 @@ public class AppController {
 	/**
 	 * This method is called from the constructor, it will load the data from the
 	 * txt resource file into the arraylist to be used as the inventory for the application
-	 * @throws Exception
+	 * @throws Exception in case of an error
 	 */
 	public void loadData() throws Exception { 
 		File toyInventoryInfo = new File(fileName);
