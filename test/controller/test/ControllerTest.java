@@ -43,7 +43,10 @@ class ControllerTest {
 	}
 	
 	
-	
+	/**
+	 * This test covers the functionality of the adding and removing item methods
+	 * @throws Exception if an error happens during the add or remove
+	 */
 	@Test
 	public void testAddAndRemoveItem() throws Exception {
 		

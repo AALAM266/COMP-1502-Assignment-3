@@ -20,8 +20,19 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import model.Toys;
 
+/**
+ * This class is the controller for the ToyStoreApp.fxml file. It handles and initializes all the events and actions that occur in the GUI, including buttons, textfields, and dropdown menus.
+ * It also handles the exceptions that are thrown when invalid input is entered into the textfields.
+ * 
+ * @authors Akheel Alam Eddin and Keegan Hong
+ * @version 1.0
+ */
 public class Manager extends AppController implements Initializable {
 
+	/**
+	 * This is the constructor for the Manager class. It calls the super constructor from the AppController class.
+	 * @throws Exception incase of an error
+	 */
     public Manager() throws Exception {
 		super();
 	}
@@ -139,6 +150,11 @@ public class Manager extends AppController implements Initializable {
     
     public Toys currentToy;
     
+	/**
+	 * This method initializes the GUI and sets the items in the dropdown menu and the listviews.
+	 * @param arg0 the URL
+	 * @param arg1 the ResourceBundle
+	 */
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		categoryDropDown.setItems(FXCollections.observableArrayList("Figure", "Animal", "Puzzle", "BoardGame"));
@@ -162,6 +178,11 @@ public class Manager extends AppController implements Initializable {
     	});
 	}
     
+	/**
+	 * This method checks the serial number and validates it incase the user enters an invalid serial number.
+	 * @param serialNumber the serial number to validate
+	 * @return true if the serial number is valid, false otherwise
+	 */
     public boolean isValidSerialNumber(String serialNumber) {
     	if (serialNumber != null) {
     		for (Toys t : toyInventory) {
@@ -176,6 +197,12 @@ public class Manager extends AppController implements Initializable {
                && serialNumber.chars().allMatch(Character::isDigit);
     }
     
+	/**
+	 * This method checks the price and validates it incase the user enters an invalid price.
+	 * @param price the price to validate
+	 * @return true if the price is valid, false otherwise
+	 * @throws NegativePriceException incase the price is negative
+	 */
     public boolean isValidToyPrice(String price) throws NegativePriceException {
     	boolean isValid = false;
     	double priceValue = Double.parseDouble(price);
@@ -190,6 +217,11 @@ public class Manager extends AppController implements Initializable {
 		return isValid;
     }
 
+	/**
+	 * This method checks the availability count and validates it incase the user enters an invalid availability count.
+	 * @param count the availability count to validate
+	 * @return true if the availability count is valid, false otherwise
+	 */
     public boolean isValidToyAvailabilityCount(String count) {
         try {
             int countValue = Integer.parseInt(count);
@@ -199,6 +231,11 @@ public class Manager extends AppController implements Initializable {
         }
     }
 
+	/**
+	 * This method checks the age rating and validates it incase the user enters an invalid age rating.
+	 * @param age the age rating to validate
+	 * @return true if the age rating is valid, false otherwise
+	 */
     public boolean isValidToyAgeRating(String age) {
         try {
             int ageValue = Integer.parseInt(age);
@@ -208,12 +245,20 @@ public class Manager extends AppController implements Initializable {
         }
     }
 
-
+	/**
+	 * This method checks user input for name, brand, animal material, and board game designers and validates it incase the user enters an invalid input.
+	 * @param str the user input to validate
+	 * @return true if the user input is valid, false otherwise
+	 */
     public boolean isValidString(String str) {
         return str != null && !str.trim().isEmpty();
     }
 
-  
+	/**
+	 * This method checks the figure classification (Action (a), Doll (d), or Historic (h)) and validates it incase the user enters an invalid figure classification.
+	 * @param classification the figure classification to validate
+	 * @return true if the figure classification is valid, false otherwise
+	 */
     public boolean isValidFigureClassification(String classification) {
         if (classification == null || classification.trim().isEmpty()) {
             return false;
@@ -223,7 +268,11 @@ public class Manager extends AppController implements Initializable {
         		lowerCaseClassification.equals("a") || lowerCaseClassification.equals("d") || lowerCaseClassification.equals("h");
     }
 
-
+	/**
+	 * This method checks the puzzle type (Mechanical (m), Cryptic (c), Logic (l), Trivia (t), or Riddle (r)) and validates it incase the user enters an invalid puzzle type.
+	 * @param type the puzzle type to validate
+	 * @return true if the puzzle type is valid, false otherwise
+	 */
     public boolean isValidPuzzleType(String type) {
         if (type == null || type.trim().isEmpty()) {
             return false;
@@ -233,7 +282,11 @@ public class Manager extends AppController implements Initializable {
         		lowerCaseType.equals("m") || lowerCaseType.equals("c") || lowerCaseType.equals("l") || lowerCaseType.equals("r");
     }
 
-
+	/**
+	 * This method checks the animal material (Small (s), Medium (m), or Large (l)) and validates it incase the user enters an invalid animal material.
+	 * @param animalSize the animal material to validate
+	 * @return true if the animal material is valid, false otherwise
+	 */
     public boolean isValidAnimalSize(String animalSize) {
         if (animalSize == null || animalSize.trim().isEmpty()) {
             return false;
@@ -243,7 +296,11 @@ public class Manager extends AppController implements Initializable {
                 lowerCase.equals("s") || lowerCase.equals("m") || lowerCase.equals("l");
     }
 
-
+	/**
+	 * This method checks the minimum number of players and validates it incase the user enters an invalid minimum number of players.
+	 * @param minPlayers the minimum number of players to validate
+	 * @return true if the minimum number of players is valid, false otherwise
+	 */
     public boolean isValidMinPlayers(String minPlayers) {
         try {
             int min = Integer.parseInt(minPlayers);
@@ -253,7 +310,13 @@ public class Manager extends AppController implements Initializable {
         }
     }
 
- 
+	/**
+	 * This method checks the maximum number of players and validates it incase the user enters an invalid maximum number of players.
+	 * @param maxPlayers the maximum number of players to validate
+	 * @param minPlayers the minimum number of players to validate
+	 * @return true if the maximum number of players is valid, false otherwise
+	 * @throws MinMaxException incase the minimum number of players is larger than the maximum number of players
+	 */
     public boolean isValidMaxPlayers(String maxPlayers, String minPlayers) throws MinMaxException {
     	boolean isValid = false;
     	int max;
@@ -275,6 +338,10 @@ public class Manager extends AppController implements Initializable {
 		return isValid;
     }
     
+	/**
+	 * This method handles the buy button in the home screen when the user is searching for a toy they want to purchase
+	 * @param event the event that occurs when the buy button is clicked
+	 */
     @FXML
     void btnBuyHandler(ActionEvent event) {
     	ApplicationLogger.logInfo("Buy Button Clicked");
@@ -297,6 +364,12 @@ public class Manager extends AppController implements Initializable {
     
     }
     
+	/**
+	 * This method handles the save button in the add toy screen when the user is adding a new toy to the inventory
+	 * @param event the event that occurs when the save button is clicked
+	 * @throws NegativePriceException incase the price is negative
+	 * @throws MinMaxException incase the minimum number of players is larger than the maximum number of players
+	 */
     @FXML
     void btnSaveHandler(ActionEvent event) throws NegativePriceException, MinMaxException { 
     	ApplicationLogger.logInfo("Save Button Clicked");
@@ -393,6 +466,10 @@ public class Manager extends AppController implements Initializable {
     	
     }	
     
+	/**
+	 * This method handles the remove button in the remove toy screen when the user is removing a toy from the inventory
+	 * @param event the event that occurs when the remove button is clicked
+	 */
     @FXML
     void btnRemoveHandler(ActionEvent event) {
     	ApplicationLogger.logInfo("Remove Button Clicked");
@@ -412,6 +489,10 @@ public class Manager extends AppController implements Initializable {
 	
     }
     
+	/**
+	 * This method handles the search button in the home screen when the user is searching for a toy
+	 * @param event the event that occurs when the search button is clicked
+	 */
     @FXML
     void btnSearchHandler(ActionEvent event) {
     	ApplicationLogger.logInfo("Search Button Clicked");
@@ -458,6 +539,10 @@ public class Manager extends AppController implements Initializable {
 		}
     }
     
+	/**
+	 * This method handles the clear button in the home screen when the user is searching for a toy
+	 * @param event the event that occurs when the clear button is clicked
+	 */
     @FXML void btnClearHandler(ActionEvent event) { 
     	ApplicationLogger.logInfo("Clear Button Clicked");
     	txtFieldSNSearch.clear(); 
@@ -466,6 +551,10 @@ public class Manager extends AppController implements Initializable {
     	listViewToyInvHome.getItems().clear(); 
     }
 
+	/**
+	 * This method handles the name radio button when the user wants to search by name
+	 * @param event the event that occurs when the name radio button is clicked
+	 */
     @FXML
     void btnNameHandler(ActionEvent event) {
     	ApplicationLogger.logInfo("Name Button Clicked");
@@ -476,6 +565,10 @@ public class Manager extends AppController implements Initializable {
     	txtFieldTypeSearch.setDisable(true);
     }
 
+	/**
+	 * This method handles the serial number radio button when the user wants to search by serial number
+	 * @param event the event that occurs when the serial number radio button is clicked
+	 */
     @FXML
     void btnSNHandler(ActionEvent event) {
     	ApplicationLogger.logInfo("Serial Number Button Clicked");
@@ -486,6 +579,10 @@ public class Manager extends AppController implements Initializable {
     	txtFieldTypeSearch.setDisable(true);
     }
 
+	/**
+	 * This method handles the type radio button when the user wants to search by type
+	 * @param event the event that occurs when the type radio button is clicked
+	 */
     @FXML
     void btnTypeHandler(ActionEvent event) {
     	ApplicationLogger.logInfo("Type Button Clicked");
@@ -496,6 +593,10 @@ public class Manager extends AppController implements Initializable {
     	txtFieldTypeSearch.setDisable(false);
     }
 
+	/**
+	 * This method handles the refresh button in the remove toy screen when the user wants to refresh the listview
+	 * @param event the event that occurs when the refresh button is clicked
+	 */
     @FXML
     void btnGetResultsHandler(ActionEvent event) {
     	ApplicationLogger.logInfo("Refresh Button Clicked");
@@ -503,6 +604,10 @@ public class Manager extends AppController implements Initializable {
     	listViewToyInvRemove.getItems().addAll(toyInventory);
     }
     
+	/**
+	 * This method handles the dropdown menu when the user wants to select the type of toy to add to the inventory
+	 * @param event the event that occurs when the dropdown menu is clicked
+	 */
     @FXML
     void catergoryDropDownHandler(ActionEvent event) {
   
