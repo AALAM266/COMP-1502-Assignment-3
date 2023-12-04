@@ -344,7 +344,7 @@ public class Manager extends AppController implements Initializable {
             return false; 
         }
 
-        if (max < min) {
+        if (max < 0 || max < min) {
             throw new MinMaxException();
         }
         return true;

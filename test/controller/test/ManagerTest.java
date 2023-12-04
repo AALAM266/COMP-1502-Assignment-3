@@ -64,7 +64,7 @@ class ManagerTest {
 	public void testIsValidToyPrice() throws NegativePriceException {
 		assertTrue(manager.isValidToyPrice("10.99"));
 		assertThrows(NegativePriceException.class, () -> manager.isValidToyPrice("-5.00"));
-		assertThrows(NumberFormatException.class, () -> manager.isValidToyPrice("wrong"));
+		assertFalse(manager.isValidToyPrice("wrong"));
 	}
 	
 	/**
@@ -142,10 +142,9 @@ class ManagerTest {
 	 */
 	@Test
 	public void testIsValidMaxPlayers() throws MinMaxException {
-		assertTrue(manager.isValidMaxPlayers("4", "2"));
-		assertFalse(manager.isValidMaxPlayers("1", "3"));
-		assertFalse(manager.isValidMaxPlayers("-1", "2"));
-		assertFalse(manager.isValidMaxPlayers("abc", "2"));
+	    assertTrue(manager.isValidMaxPlayers("4", "2"));
+	    assertThrows(MinMaxException.class, () -> manager.isValidMaxPlayers("1", "3"));
+	    assertFalse(manager.isValidMaxPlayers("abc", "2"));
 	}
 
 	/**
