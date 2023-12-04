@@ -2,6 +2,7 @@ package controller.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import controller.Manager;
 import exceptions.MinMaxException;
@@ -13,7 +14,7 @@ class ManagerTest {
 
 	private Manager manager;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         try {
             manager = new Manager();
