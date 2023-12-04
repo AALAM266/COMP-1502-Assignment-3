@@ -179,19 +179,32 @@ public class Manager extends AppController implements Initializable {
 	}
     
 	/**
-	 * This method checks the serial number and validates it incase the user enters an invalid serial number.
+	 * This method checks the serial number and validates it in case the user enters an invalid serial number or one that already exists.
+	 * @param serialNumber the serial number to validate
+	 * @return true if the serial number is valid, false otherwise
+	 */
+    public boolean isValidNewSerialNumber(String serialNumber) {
+    	
+		if (serialNumber != null) {
+			for (Toys t : toyInventory) {
+				if (serialNumber.equals(t.getSerialNumber())) {
+					return false;
+				}
+			}
+		}
+		
+        return serialNumber != null
+               && serialNumber.length() == 10
+               && serialNumber.chars().allMatch(Character::isDigit);
+    }
+    
+    /**
+	 * This method checks the serial number and validates it in case the user enters an invalid serial number.
 	 * @param serialNumber the serial number to validate
 	 * @return true if the serial number is valid, false otherwise
 	 */
     public boolean isValidSerialNumber(String serialNumber) {
-    	if (serialNumber != null) {
-    		for (Toys t : toyInventory) {
-    			if (serialNumber.equals(t.getSerialNumber())) {
-				return false;
-    			}
-    		}
-    	}
-    	
+
         return serialNumber != null
                && serialNumber.length() == 10
                && serialNumber.chars().allMatch(Character::isDigit);
@@ -379,7 +392,7 @@ public class Manager extends AppController implements Initializable {
 				+ " " + figureClassField.getText() + " " + animalMaterialField.getText() + " " + animalSizeField.getText() + " " + puzzleTypeField.getText()
 				 + " " + minnumField.getText() + " " + maxnumField.getText() + " " + designersField.getText());
 		
-    	if (isValidSerialNumber(addtoySnField.getText()) && isValidString(addtoyNameField.getText()) 
+    	if (isValidNewSerialNumber(addtoySnField.getText()) && isValidString(addtoyNameField.getText()) 
     			&& isValidString(addtoyBrandField.getText()) && isValidToyPrice(addtoyPriceField.getText()) 
     			&& isValidToyAvailabilityCount(addtoyAvailcountField.getText()) && isValidToyAgeRating(addtoyAgeAppField.getText())){
     		
