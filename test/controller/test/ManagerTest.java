@@ -24,30 +24,23 @@ class ManagerTest {
 
 	/**
 	 * Sets up the testing environment before each test
-	 * Initializes the Manager class
+	 * Initializes the Manager class and JavFX Platform
 	 */
 	@BeforeAll
 	static void setUp() {
-		try {
-			manager = new Manager();
-		} catch (Exception e) {
-			e.printStackTrace();
-			fail("Exception was thrown: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Sets up the JavaFX environment before each test
-	 */
-	@BeforeAll
-	static void setUp2() {
-		Platform.startup(() -> {});
-
-		manager.listViewToyInvRemove = new ListView<>();
-		manager.listViewToyInvHome = new ListView<>();
-		manager.categoryDropDown = new ComboBox<>();
-		
-		manager.initialize(null, null);
+	    Platform.startup(() -> {});
+	    
+	    try {
+	        manager = new Manager();
+	        manager.listViewToyInvRemove = new ListView<>();
+	        manager.listViewToyInvHome = new ListView<>();
+	        manager.categoryDropDown = new ComboBox<>();
+	        
+	        manager.initialize(null, null);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        fail("Exception was thrown: " + e.getMessage());
+	    }
 	}
 
 	/**
